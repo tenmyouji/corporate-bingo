@@ -479,19 +479,32 @@ textarea::placeholder {
     padding: 10px 0;
   }
 
+  .entry-app {
+    place-items: stretch center;
+  }
+
+  .workspace {
+    height: 100%;
+  }
+
   .controls-panel {
+    height: 100%;
     max-height: calc(100dvh - 20px);
     border-radius: 10px;
     padding: 18px;
   }
 
   .intro {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+  }
+
+  .intro h1 {
+    margin-bottom: 4px;
   }
 
   .intro p {
-    font-size: 0.88rem;
-    line-height: 1.36;
+    font-size: 0.84rem;
+    line-height: 1.28;
   }
 
   textarea {
@@ -507,11 +520,11 @@ textarea::placeholder {
   }
 
   .entry-footer {
-    gap: 12px;
+    gap: 8px;
   }
 
   .entry-actions {
-    gap: 14px;
+    gap: 8px;
   }
 
   .primary,
@@ -521,7 +534,7 @@ textarea::placeholder {
   }
 
   .share-option {
-    min-height: 32px;
+    min-height: 28px;
   }
 
   .card-view {
@@ -639,7 +652,21 @@ textarea::placeholder {
 
   .controls-panel {
     max-height: calc(100dvh - 16px);
-    padding: 16px;
+    padding: 12px;
+  }
+
+  .intro {
+    margin-bottom: 8px;
+  }
+
+  .intro p {
+    font-size: 0.8rem;
+    line-height: 1.24;
+  }
+
+  .validation {
+    min-height: 16px;
+    margin: 5px 0 7px;
   }
 
   textarea {

@@ -13,6 +13,11 @@ import { buildShareUrl, decodePhrasesFromHash, encodePhrasesForHash } from "./sh
 import { loadSavedState, saveState } from "./storage";
 
 type AppView = "entry" | "card";
+type DialogMode = "win" | "complete" | null;
+type WinResult = {
+  plainText: string;
+  html: string;
+};
 
 const standardPhrases = [
   "Circle back",
@@ -68,7 +73,7 @@ function App() {
   });
   const [copyOnGenerate, setCopyOnGenerate] = useState(() => savedState?.copyOnGenerate ?? false);
   const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
-  const [showWinDialog, setShowWinDialog] = useState(false);
+  const [dialogMode, setDialogMode] = useState<DialogMode>(null);
 
   const parsed = useMemo(() => parsePhrases(phraseText), [phraseText]);
   const canGenerate = parsed.errors.length === 0;
@@ -94,7 +99,7 @@ function App() {
 
     setCard(createBingoCard(parsed.phrases));
     setView("card");
-    setShowWinDialog(false);
+    setDialogMode(null);
 
     if (copyOnGenerate) {
       await copyShareLink();
@@ -118,7 +123,7 @@ function App() {
     const result = buildWinResult(card, url);
 
     try {
-      await navigator.clipboard.writeText(result);
+      await copyWinResultToClipboard(result);
       window.history.replaceState(null, "", encodePhrasesForHash(parsed.phrases));
       setCopyStatus("copied");
     } catch {
@@ -144,16 +149,16 @@ function App() {
     }
 
     setCard(createBingoCard(parsed.phrases));
-    setShowWinDialog(false);
+    setDialogMode(null);
   }
 
   function clearCard() {
     setCard((current) => (current ? clearMarkedCells(current) : current));
-    setShowWinDialog(false);
+    setDialogMode(null);
   }
 
   function editPhrases() {
-    setShowWinDialog(false);
+    setDialogMode(null);
     setView("entry");
   }
 
@@ -171,7 +176,9 @@ function App() {
       const nextCard = toggleCell(current, index);
 
       if (!hadBingo && hasBingo(nextCard)) {
-        setShowWinDialog(true);
+        setDialogMode("win");
+      } else if (dialogMode === null && !isCardComplete(current) && isCardComplete(nextCard)) {
+        setDialogMode("complete");
       }
 
       return nextCard;
@@ -235,11 +242,11 @@ function App() {
             </div>
           </nav>
 
-          {showWinDialog ? (
+          {dialogMode ? (
             <div className="modal-backdrop" role="presentation">
               <section className="win-dialog" role="dialog" aria-modal="true" aria-labelledby="win-title">
                 <div className="win-dialog-body">
-                  <h2 id="win-title">You won!</h2>
+                  <h2 id="win-title">{dialogMode === "complete" ? "Card complete!" : "You won!"}</h2>
                   <p>Share with your team:</p>
                   <div className="win-grid" aria-hidden="true">
                     {card.map((cell, index) => (
@@ -254,9 +261,11 @@ function App() {
                   </button>
                 </div>
                 <div className="win-dialog-actions">
-                  <button type="button" className="primary" onClick={() => setShowWinDialog(false)}>
-                    Keep playing
-                  </button>
+                  {dialogMode === "win" ? (
+                    <button type="button" className="primary" onClick={() => setDialogMode(null)}>
+                      Keep playing
+                    </button>
+                  ) : null}
                   <button type="button" onClick={shuffleCard}>
                     Generate new card
                   </button>
@@ -392,7 +401,21 @@ function restoreSavedCard(card: BingoCard | null | undefined): BingoCard | null 
   return Array.isArray(card) && card.length === bingoConstants.cardSize ? restoreFreeSpace(card) : null;
 }
 
-function buildWinResult(card: BingoCard, shareUrl: string): string {
+async function copyWinResultToClipboard(result: WinResult) {
+  if ("ClipboardItem" in window && "write" in navigator.clipboard) {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        "text/html": new Blob([result.html], { type: "text/html" }),
+        "text/plain": new Blob([result.plainText], { type: "text/plain" })
+      })
+    ]);
+    return;
+  }
+
+  await navigator.clipboard.writeText(result.plainText);
+}
+
+function buildWinResult(card: BingoCard, shareUrl: string): WinResult {
   const winningIndexes = getWinningIndexes(card);
   const rows = Array.from({ length: 5 }, (_, rowIndex) =>
     card
@@ -400,8 +423,12 @@ function buildWinResult(card: BingoCard, shareUrl: string): string {
       .map((_, cellIndex) => (winningIndexes.has(rowIndex * 5 + cellIndex) ? "🟪" : "⬜"))
       .join("")
   );
+  const linkText = "#CorporteBingo";
 
-  return ["Corporate Bingo", "", ...rows, "", shareUrl].join("\n");
+  return {
+    plainText: [...rows, "", `${linkText}: ${shareUrl}`].join("\n"),
+    html: `${rows.join("<br>")}<br><br><a href="${escapeHtml(shareUrl)}">${linkText}</a>`
+  };
 }
 
 function getWinningIndexes(card: BingoCard): Set<number> {
@@ -410,6 +437,18 @@ function getWinningIndexes(card: BingoCard): Set<number> {
       .filter((line) => line.every((index) => card[index]?.isMarked))
       .flat()
   );
+}
+
+function isCardComplete(card: BingoCard): boolean {
+  return card.every((cell) => cell.isMarked);
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
 }
 
 export default App;

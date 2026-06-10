@@ -246,9 +246,98 @@ describe("App two-step flow", () => {
     await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalled());
 
     const copiedText = vi.mocked(navigator.clipboard.writeText).mock.calls[0][0];
-    expect(copiedText).toContain("Corporate Bingo");
+    expect(copiedText).toMatch(/^🟪🟪🟪🟪🟪\n/);
     expect(copiedText).toContain("🟪🟪🟪🟪🟪");
+    expect(copiedText).toContain("#CorporteBingo: ");
     expect(copiedText).toContain("#phrases=");
+  });
+
+  it("copies a linked hashtag from the win dialog when rich clipboard is available", async () => {
+    const write = vi.fn().mockResolvedValue(undefined);
+    const nativeBlob = globalThis.Blob;
+    class BlobMock {
+      parts: string[];
+      type: string;
+
+      constructor(parts: string[], options?: { type?: string }) {
+        this.parts = parts;
+        this.type = options?.type ?? "";
+      }
+    }
+    class ClipboardItemMock {
+      items: Record<string, BlobMock>;
+
+      constructor(items: Record<string, BlobMock>) {
+        this.items = items;
+      }
+    }
+
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        write,
+        writeText: vi.fn().mockResolvedValue(undefined)
+      }
+    });
+    Object.defineProperty(window, "ClipboardItem", {
+      configurable: true,
+      value: ClipboardItemMock
+    });
+    Object.defineProperty(globalThis, "Blob", {
+      configurable: true,
+      value: BlobMock
+    });
+
+    render(<App />);
+
+    fillValidPhrases();
+    fireEvent.click(screen.getByRole("button", { name: "Generate card" }));
+    const cells = await screen.findAllByRole("gridcell");
+
+    for (const cell of cells.slice(0, 5)) {
+      fireEvent.click(cell);
+    }
+
+    const dialog = screen.getByRole("dialog", { name: "You won!" });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Copy" }));
+
+    await waitFor(() => expect(write).toHaveBeenCalled());
+
+    const clipboardItem = write.mock.calls[0][0][0] as ClipboardItemMock;
+    const html = clipboardItem.items["text/html"].parts.join("");
+    expect(html).toContain('href="http://localhost:3000/#phrases=');
+    expect(html).toContain(">#CorporteBingo</a>");
+    Object.defineProperty(globalThis, "Blob", {
+      configurable: true,
+      value: nativeBlob
+    });
+  });
+
+  it("shows a completion dialog without Keep playing after finishing the card", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    fillValidPhrases();
+    await user.click(screen.getByRole("button", { name: "Generate card" }));
+    const cells = await screen.findAllByRole("gridcell");
+
+    for (const cell of cells.slice(0, 5)) {
+      await user.click(cell);
+    }
+
+    await user.click(within(screen.getByRole("dialog", { name: "You won!" })).getByRole("button", { name: "Keep playing" }));
+
+    for (const cell of cells) {
+      if (cell.getAttribute("aria-pressed") === "false") {
+        await user.click(cell);
+      }
+    }
+
+    const dialog = screen.getByRole("dialog", { name: "Card complete!" });
+    expect(within(dialog).queryByRole("button", { name: "Keep playing" })).not.toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Copy" })).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Generate new card" })).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Edit phrases" })).toBeInTheDocument();
   });
 
   it("restores the card step and marked squares after a refresh", async () => {

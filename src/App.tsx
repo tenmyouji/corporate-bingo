@@ -14,6 +14,33 @@ import { loadSavedState, saveState } from "./storage";
 
 type AppView = "entry" | "card";
 
+const standardPhrases = [
+  "Circle back",
+  "Take this offline",
+  "Low-hanging fruit",
+  "Bandwidth",
+  "Deep dive",
+  "Quick sync",
+  "Move the needle",
+  "Align on next steps",
+  "Action item",
+  "Table stakes",
+  "Hard stop",
+  "Parking lot",
+  "Ping me",
+  "North star",
+  "Stakeholder buy-in",
+  "Thought leadership",
+  "At scale",
+  "Unlock value",
+  "Close the loop",
+  "Single source of truth",
+  "Best practice",
+  "Net-new",
+  "Strategic priority",
+  "Run it up the flagpole"
+].join("\n");
+
 function App() {
   const sharedPhrases = useMemo(() => decodePhrasesFromHash(window.location.hash), []);
   const savedState = useMemo(() => loadSavedState(), []);
@@ -111,6 +138,10 @@ function App() {
   function editPhrases() {
     setShowWinDialog(false);
     setView("entry");
+  }
+
+  function restoreStandardPhrases() {
+    setPhraseText(standardPhrases);
   }
 
   function markCell(index: number) {
@@ -258,6 +289,9 @@ function App() {
               {parsed.phrases.length} unique phrase{parsed.phrases.length === 1 ? "" : "s"}
             </span>
             <div className="entry-actions">
+              <button type="button" className="secondary" onClick={restoreStandardPhrases}>
+                Standard phrases
+              </button>
               <label className="share-option">
                 <input
                   type="checkbox"
@@ -272,10 +306,6 @@ function App() {
               </button>
             </div>
           </div>
-
-          <p>
-            {parsed.duplicates.length > 0 ? `${parsed.duplicates.length} duplicate removed` : " "}
-          </p>
 
           <p className={`copy-status ${copyStatus}`} aria-live="polite">
             {copyStatus === "copied"
@@ -301,11 +331,9 @@ function Icon({ name }: { name: "arrow" | "clear" | "edit" | "share" | "shuffle"
       ) : null}
       {name === "clear" ? (
         <>
-          <path d="m7 21 10-10" />
-          <path d="m15 5 4 4" />
-          <path d="m5 19 4 4" />
-          <path d="m3 21 3.5-3.5" />
-          <path d="m14 6 3-3 4 4-3 3" />
+          <path d="m7 21-4-4 9.2-9.2a2.8 2.8 0 0 1 4 0l2 2a2.8 2.8 0 0 1 0 4L11 21" />
+          <path d="M22 21H7" />
+          <path d="m5 19 5-5" />
         </>
       ) : null}
       {name === "edit" ? (
@@ -317,17 +345,18 @@ function Icon({ name }: { name: "arrow" | "clear" | "edit" | "share" | "shuffle"
       ) : null}
       {name === "share" ? (
         <>
-          <path d="M12 3v12" />
-          <path d="m7 8 5-5 5 5" />
-          <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+          <path d="M12 16V4" />
+          <path d="m7 9 5-5 5 5" />
+          <path d="M20 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4" />
         </>
       ) : null}
       {name === "shuffle" ? (
         <>
-          <path d="M16 3h5v5" />
-          <path d="M4 7h3a6 6 0 0 1 5 3l1 2a6 6 0 0 0 5 3h3" />
-          <path d="M4 17h3a6 6 0 0 0 5-3l1-2a6 6 0 0 1 5-3h3" />
-          <path d="m16 21 5-5-5-5" />
+          <path d="m18 14 4 4-4 4" />
+          <path d="m18 2 4 4-4 4" />
+          <path d="M2 18h1.4a7 7 0 0 0 5.1-2.2l7-7A7 7 0 0 1 20.6 6H22" />
+          <path d="M2 6h1.4a7 7 0 0 1 5.1 2.2l1.2 1.2" />
+          <path d="M14.3 14.6 15.5 16a7 7 0 0 0 5.1 2H22" />
         </>
       ) : null}
     </svg>

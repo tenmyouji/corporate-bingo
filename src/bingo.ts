@@ -56,10 +56,6 @@ export function parsePhrases(input: string): ParsedPhrases {
 
   const errors: string[] = [];
 
-  if (duplicates.length > 0) {
-    errors.push(`Remove ${duplicates.length} duplicate phrase${duplicates.length === 1 ? "" : "s"}.`);
-  }
-
   if (phrases.length < REQUIRED_PHRASES) {
     errors.push(`Add ${REQUIRED_PHRASES - phrases.length} more phrase${REQUIRED_PHRASES - phrases.length === 1 ? "" : "s"}.`);
   }

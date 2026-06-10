@@ -198,6 +198,14 @@ textarea::placeholder {
   opacity: 1;
 }
 
+.secondary {
+  min-width: 132px;
+  border-color: #dedede;
+  padding: 0 12px;
+  background: #ffffff;
+  color: #111111;
+}
+
 .copy-status,
 .controls-panel > p:not(.copy-status) {
   min-height: 18px;
@@ -239,13 +247,13 @@ textarea::placeholder {
 }
 
 .card-copy-status {
-  width: max-content;
-  max-width: 260px;
-  min-height: 16px;
+  width: 260px;
+  height: 32px;
   margin: 6px 0 0;
+  overflow: hidden;
   font-size: 0.76rem;
   line-height: 1.15;
-  text-align: left;
+  text-align: right;
 }
 
 .bingo-board {
@@ -304,14 +312,14 @@ textarea::placeholder {
 .card-actions {
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
 }
 
 .action-group {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -324,11 +332,13 @@ textarea::placeholder {
 
 .share-action {
   display: grid;
-  justify-items: start;
+  grid-template-rows: 36px 32px;
+  justify-items: end;
 }
 
 .card-action-slot {
   display: grid;
+  grid-template-rows: 36px 32px;
 }
 
 .modal-backdrop {
@@ -503,6 +513,7 @@ textarea::placeholder {
   }
 
   .primary,
+  .secondary,
   .entry-actions .primary {
     width: 100%;
   }
@@ -519,7 +530,7 @@ textarea::placeholder {
   .card-copy-status {
     width: 100%;
     max-width: none;
-    min-height: 14px;
+    height: 28px;
     margin-top: 4px;
     font-size: 0.66rem;
     line-height: 1.05;
@@ -557,6 +568,7 @@ textarea::placeholder {
   .card-action-slot {
     display: grid;
     width: 100%;
+    grid-template-rows: 40px 28px;
   }
 
   .action-group button,

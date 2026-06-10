@@ -16,12 +16,12 @@ describe("parsePhrases", () => {
     expect(result.errors).toContain("Add 21 more phrases.");
   });
 
-  it("detects duplicates case-insensitively", () => {
+  it("ignores duplicates case-insensitively", () => {
     const result = parsePhrases("Budget sync\nbudget sync\nBUDGET SYNC");
 
     expect(result.phrases).toEqual(["Budget sync"]);
     expect(result.duplicates).toEqual(["budget sync", "BUDGET SYNC"]);
-    expect(result.errors).toContain("Remove 2 duplicate phrases.");
+    expect(result.errors).toContain("Add 23 more phrases.");
   });
 
   it("allows more than 24 phrases", () => {

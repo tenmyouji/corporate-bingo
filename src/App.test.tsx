@@ -194,6 +194,63 @@ describe("App two-step flow", () => {
     expect(within(dialog).getByRole("button", { name: "Edit phrases" })).toBeInTheDocument();
   });
 
+  it("highlights only the winning line in the win dialog preview", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    fillValidPhrases();
+    await user.click(screen.getByRole("button", { name: "Generate card" }));
+    const cells = await screen.findAllByRole("gridcell");
+    await user.click(cells[6]);
+
+    for (const cell of cells.slice(0, 5)) {
+      await user.click(cell);
+    }
+
+    const dialog = screen.getByRole("dialog", { name: "You won!" });
+    expect(dialog.querySelectorAll(".win-grid span.marked")).toHaveLength(5);
+  });
+
+  it("highlights multiple winning lines completed by one final mark", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    fillValidPhrases();
+    await user.click(screen.getByRole("button", { name: "Generate card" }));
+    const cells = await screen.findAllByRole("gridcell");
+
+    for (const index of [1, 2, 3, 4, 5, 10, 15, 20]) {
+      await user.click(cells[index]);
+    }
+
+    await user.click(cells[0]);
+
+    const dialog = screen.getByRole("dialog", { name: "You won!" });
+    expect(dialog.querySelectorAll(".win-grid span.marked")).toHaveLength(9);
+  });
+
+  it("copies a Wordle-style result and share link from the win dialog", async () => {
+    render(<App />);
+
+    fillValidPhrases();
+    fireEvent.click(screen.getByRole("button", { name: "Generate card" }));
+    const cells = await screen.findAllByRole("gridcell");
+
+    for (const cell of cells.slice(0, 5)) {
+      fireEvent.click(cell);
+    }
+
+    const dialog = screen.getByRole("dialog", { name: "You won!" });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Copy" }));
+
+    await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalled());
+
+    const copiedText = vi.mocked(navigator.clipboard.writeText).mock.calls[0][0];
+    expect(copiedText).toContain("Corporate Bingo");
+    expect(copiedText).toContain("🟪🟪🟪🟪🟪");
+    expect(copiedText).toContain("#phrases=");
+  });
+
   it("restores the card step and marked squares after a refresh", async () => {
     const user = userEvent.setup();
     const { unmount } = render(<App />);

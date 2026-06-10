@@ -109,6 +109,23 @@ function App() {
     await copyShareLink();
   }
 
+  async function copyWinResult() {
+    if (!canGenerate || !card) {
+      return;
+    }
+
+    const url = buildShareUrl(window.location.origin, window.location.pathname, parsed.phrases);
+    const result = buildWinResult(card, url);
+
+    try {
+      await navigator.clipboard.writeText(result);
+      window.history.replaceState(null, "", encodePhrasesForHash(parsed.phrases));
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("failed");
+    }
+  }
+
   async function copyShareLink() {
     const url = buildShareUrl(window.location.origin, window.location.pathname, parsed.phrases);
 
@@ -226,10 +243,13 @@ function App() {
                   <p>Share with your team:</p>
                   <div className="win-grid" aria-hidden="true">
                     {card.map((cell, index) => (
-                      <span key={`${cell.id}-win-${index}`} className={cell.isMarked ? "marked" : ""} />
+                      <span
+                        key={`${cell.id}-win-${index}`}
+                        className={getWinningIndexes(card).has(index) ? "marked" : ""}
+                      />
                     ))}
                   </div>
-                  <button type="button" className="copy-win-button" onClick={shareCard}>
+                  <button type="button" className="copy-win-button" onClick={copyWinResult}>
                     Copy
                   </button>
                 </div>
@@ -370,6 +390,26 @@ function createCardFromText(text: string): BingoCard | null {
 
 function restoreSavedCard(card: BingoCard | null | undefined): BingoCard | null {
   return Array.isArray(card) && card.length === bingoConstants.cardSize ? restoreFreeSpace(card) : null;
+}
+
+function buildWinResult(card: BingoCard, shareUrl: string): string {
+  const winningIndexes = getWinningIndexes(card);
+  const rows = Array.from({ length: 5 }, (_, rowIndex) =>
+    card
+      .slice(rowIndex * 5, rowIndex * 5 + 5)
+      .map((_, cellIndex) => (winningIndexes.has(rowIndex * 5 + cellIndex) ? "🟪" : "⬜"))
+      .join("")
+  );
+
+  return ["Corporate Bingo", "", ...rows, "", shareUrl].join("\n");
+}
+
+function getWinningIndexes(card: BingoCard): Set<number> {
+  return new Set(
+    bingoConstants.winningLines
+      .filter((line) => line.every((index) => card[index]?.isMarked))
+      .flat()
+  );
 }
 
 export default App;

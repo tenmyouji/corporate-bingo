@@ -356,13 +356,16 @@ textarea::placeholder {
 
 .share-action {
   display: grid;
+  width: 260px;
   grid-template-rows: 36px 32px;
   justify-items: end;
 }
 
 .card-action-slot {
   display: grid;
+  width: 260px;
   grid-template-rows: 36px 32px;
+  justify-items: start;
 }
 
 .modal-backdrop {

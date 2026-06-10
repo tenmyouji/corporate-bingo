@@ -259,6 +259,7 @@ textarea::placeholder {
 .bingo-board {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   gap: 10px;
   width: 100%;
   max-width: 100%;
@@ -269,6 +270,7 @@ textarea::placeholder {
   display: flex;
   overflow: hidden;
   align-items: center;
+  aspect-ratio: 1;
   justify-content: center;
   min-width: 0;
   min-height: 0;

@@ -32,7 +32,8 @@ body {
 
 button,
 textarea,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -56,6 +57,7 @@ button:disabled {
 
 button:focus-visible,
 input:focus-visible,
+select:focus-visible,
 textarea:focus-visible {
   outline: 3px solid #6254f3;
   outline-offset: 2px;
@@ -171,6 +173,18 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+
+.phrase-set-picker select {
+  min-width: 176px;
+  min-height: 38px;
+  border: 1px solid #dedede;
+  border-radius: 8px;
+  padding: 0 34px 0 12px;
+  background: #ffffff;
+  color: #111111;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .share-option {
@@ -289,15 +303,15 @@ textarea::placeholder {
 }
 
 .cell span {
-  display: -webkit-box;
+  display: block;
   overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
   color: inherit;
   font-size: clamp(0.72rem, 1.3vw, 1rem);
   font-weight: 500;
   line-height: 1.18;
   text-align: center;
+  white-space: normal;
+  word-break: normal;
   overflow-wrap: anywhere;
 }
 
@@ -349,7 +363,6 @@ textarea::placeholder {
 .card-action-slot {
   display: grid;
   grid-template-rows: 36px 32px;
-  justify-items: end;
 }
 
 .modal-backdrop {
@@ -546,7 +559,8 @@ textarea::placeholder {
   }
 
   .primary,
-  .secondary,
+  .phrase-set-picker,
+  .phrase-set-picker select,
   .entry-actions .primary {
     width: 100%;
   }
@@ -581,7 +595,6 @@ textarea::placeholder {
   }
 
   .cell span {
-    -webkit-line-clamp: 3;
     font-size: clamp(0.58rem, 2.35vw, 0.72rem);
     line-height: 1.06;
   }

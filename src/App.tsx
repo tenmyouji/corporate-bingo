@@ -20,32 +20,153 @@ type WinResult = {
   html: string;
 };
 
-const standardPhrases = [
-  "Circle back",
-  "Take this offline",
-  "Low-hanging fruit",
-  "Bandwidth",
-  "Deep dive",
-  "Quick sync",
-  "Move the needle",
-  "Align on next steps",
-  "Action item",
-  "Table stakes",
-  "Hard stop",
-  "Parking lot",
-  "Ping me",
-  "North star",
-  "Stakeholder buy-in",
-  "Thought leadership",
-  "At scale",
-  "Unlock value",
-  "Close the loop",
-  "Single source of truth",
-  "Best practice",
-  "Net-new",
-  "Strategic priority",
-  "Run it up the flagpole"
-].join("\n");
+const phraseSets = [
+  {
+    name: "Standard corporate",
+    phrases: [
+      "Circle back",
+      "Take this offline",
+      "Low-hanging fruit",
+      "Bandwidth",
+      "Deep dive",
+      "Quick sync",
+      "Move the needle",
+      "Align on next steps",
+      "Action item",
+      "Table stakes",
+      "Hard stop",
+      "Parking lot",
+      "Ping me",
+      "North star",
+      "Stakeholder buy-in",
+      "Thought leadership",
+      "At scale",
+      "Unlock value",
+      "Close the loop",
+      "Single source of truth",
+      "Best practice",
+      "Net-new",
+      "Strategic priority",
+      "Run it up the flagpole"
+    ]
+  },
+  {
+    name: "AI company",
+    phrases: [
+      "AI-native",
+      "Agentic workflow",
+      "Human in the loop",
+      "Model evals",
+      "Prompt engineering",
+      "Context window",
+      "Synthetic data",
+      "Fine-tuning",
+      "Retrieval augmented",
+      "Inference cost",
+      "Latency budget",
+      "Foundation model",
+      "Safety layer",
+      "Benchmark suite",
+      "Token efficiency",
+      "Multimodal roadmap",
+      "Copilot experience",
+      "Autonomous agents",
+      "Model drift",
+      "Guardrails",
+      "GPU capacity",
+      "AI transformation",
+      "Hallucination rate",
+      "Responsible AI"
+    ]
+  },
+  {
+    name: "Toxic manager",
+    phrases: [
+      "Be a team player",
+      "This is a stretch goal",
+      "We need more urgency",
+      "No excuses",
+      "Own the outcome",
+      "Perception matters",
+      "Let's not get defensive",
+      "I need solutions",
+      "This should be easy",
+      "Everyone is replaceable",
+      "You need thicker skin",
+      "That's above your level",
+      "Work smarter",
+      "Not a good look",
+      "I'll remember this",
+      "Are you committed?",
+      "We're a family",
+      "Take accountability",
+      "Manage up better",
+      "This is basic",
+      "Figure it out",
+      "I don't want surprises",
+      "You missed the mark",
+      "Let's discuss offline"
+    ]
+  },
+  {
+    name: "Town hall",
+    phrases: [
+      "Exciting quarter ahead",
+      "Record engagement",
+      "Customer obsession",
+      "Operational excellence",
+      "Strategic pillars",
+      "Leadership alignment",
+      "Macroeconomic headwinds",
+      "Employee experience",
+      "Culture of innovation",
+      "Questions in the chat",
+      "Time for one more",
+      "Transparent communication",
+      "All-hands update",
+      "Mission critical",
+      "Growth mindset",
+      "Cross-functional wins",
+      "Financial discipline",
+      "Our north star",
+      "Big bets",
+      "Customer stories",
+      "People-first culture",
+      "Values in action",
+      "Thank you for all you do",
+      "We'll follow up"
+    ]
+  },
+  {
+    name: "Layoffs",
+    phrases: [
+      "Difficult decision",
+      "Impacted roles",
+      "Restructuring",
+      "Business priorities",
+      "Right-size the org",
+      "Reduction in force",
+      "Severance package",
+      "Transition support",
+      "Outplacement services",
+      "Cost discipline",
+      "Market conditions",
+      "Focus areas",
+      "Streamline operations",
+      "Organizational changes",
+      "Long-term health",
+      "Regrettable but necessary",
+      "Support our colleagues",
+      "Manager conversations",
+      "Confidential process",
+      "Next chapter",
+      "Role elimination",
+      "Efficiency gains",
+      "Lean operating model",
+      "No further details"
+    ]
+  }
+];
 
 function App() {
   const sharedPhrases = useMemo(() => decodePhrasesFromHash(window.location.hash), []);
@@ -183,8 +304,14 @@ function App() {
     setView("entry");
   }
 
-  function restoreStandardPhrases() {
-    setPhraseText(standardPhrases);
+  function applyPhraseSet(name: string) {
+    const phraseSet = phraseSets.find((set) => set.name === name);
+
+    if (!phraseSet) {
+      return;
+    }
+
+    setPhraseText(phraseSet.phrases.join("\n"));
   }
 
   function markCell(index: number) {
@@ -346,9 +473,19 @@ function App() {
               {parsed.phrases.length} unique phrase{parsed.phrases.length === 1 ? "" : "s"}
             </span>
             <div className="entry-actions">
-              <button type="button" className="secondary" onClick={restoreStandardPhrases}>
-                Standard phrases
-              </button>
+              <label className="phrase-set-picker">
+                <span className="sr-only">Phrase set</span>
+                <select defaultValue="" onChange={(event) => applyPhraseSet(event.target.value)}>
+                  <option value="" disabled>
+                    Choose phrase set
+                  </option>
+                  {phraseSets.map((phraseSet) => (
+                    <option key={phraseSet.name} value={phraseSet.name}>
+                      {phraseSet.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
               <label className="share-option">
                 <input
                   type="checkbox"

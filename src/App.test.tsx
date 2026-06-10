@@ -28,7 +28,7 @@ describe("App two-step flow", () => {
 
     expect(screen.getByRole("heading", { name: "Corporate Bingo" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Generate card" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Standard phrases" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Phrase set" })).toBeInTheDocument();
     expect(screen.getByRole("checkbox", { name: "Copy share link to clipboard" })).toBeInTheDocument();
     expect(
       screen.getByText(
@@ -39,15 +39,15 @@ describe("App two-step flow", () => {
     expect(screen.queryByRole("grid", { name: "Bingo card" })).not.toBeInTheDocument();
   });
 
-  it("restores the standard phrase set from the phrase entry page", async () => {
+  it("applies a preset phrase set from the phrase entry page", async () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole("button", { name: "Standard phrases" }));
+    await user.selectOptions(screen.getByRole("combobox", { name: "Phrase set" }), "AI company");
 
     const textarea = screen.getByRole("textbox", { name: "Phrases" }) as HTMLTextAreaElement;
-    expect(textarea.value).toContain("Circle back");
-    expect(textarea.value).toContain("Run it up the flagpole");
+    expect(textarea.value).toContain("AI-native");
+    expect(textarea.value).toContain("Responsible AI");
     expect(screen.getByText("24 unique phrases")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Generate card" })).toBeEnabled();
   });

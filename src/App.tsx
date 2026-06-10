@@ -291,17 +291,45 @@ function App() {
 }
 
 function Icon({ name }: { name: "arrow" | "clear" | "edit" | "share" | "shuffle" }) {
-  const paths = {
-    arrow: "M5 12h14m-6-6 6 6-6 6",
-    clear: "m4 16 4-4-4-4m4 4h12",
-    edit: "M4 20h4L18.5 9.5a2.8 2.8 0 0 0-4-4L4 16v4Zm10-13 3 3",
-    share: "M12 16V4m0 0 4 4m-4-4-4 4M5 12v7h14v-7",
-    shuffle: "M16 3h5v5M4 7h4c5 0 5 10 10 10h3M4 17h4c1.5 0 2.6-.9 3.6-2.2M14 5.2C15 4 16.2 3 18 3h3"
-  };
-
   return (
     <svg className="button-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <path d={paths[name]} />
+      {name === "arrow" ? (
+        <>
+          <path d="M5 12h14" />
+          <path d="m13 6 6 6-6 6" />
+        </>
+      ) : null}
+      {name === "clear" ? (
+        <>
+          <path d="m7 21 10-10" />
+          <path d="m15 5 4 4" />
+          <path d="m5 19 4 4" />
+          <path d="m3 21 3.5-3.5" />
+          <path d="m14 6 3-3 4 4-3 3" />
+        </>
+      ) : null}
+      {name === "edit" ? (
+        <>
+          <path d="M12 20h9" />
+          <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+          <path d="m15 5 3 3" />
+        </>
+      ) : null}
+      {name === "share" ? (
+        <>
+          <path d="M12 3v12" />
+          <path d="m7 8 5-5 5 5" />
+          <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" />
+        </>
+      ) : null}
+      {name === "shuffle" ? (
+        <>
+          <path d="M16 3h5v5" />
+          <path d="M4 7h3a6 6 0 0 1 5 3l1 2a6 6 0 0 0 5 3h3" />
+          <path d="M4 17h3a6 6 0 0 0 5-3l1-2a6 6 0 0 1 5-3h3" />
+          <path d="m16 21 5-5-5-5" />
+        </>
+      ) : null}
     </svg>
   );
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bingoConstants, createBingoCard, parsePhrases } from "./bingo";
+import { bingoConstants, clearMarkedCells, createBingoCard, hasBingo, parsePhrases } from "./bingo";
 
 const phrases = Array.from({ length: 30 }, (_, index) => `Phrase ${index + 1}`);
 
@@ -61,5 +61,29 @@ describe("createBingoCard", () => {
     );
 
     expect(layouts.size).toBeGreaterThan(1);
+  });
+});
+
+describe("card state helpers", () => {
+  it("clears non-free marks and keeps the free space marked", () => {
+    const card = createBingoCard(phrases, () => 0.5).map((cell, index) =>
+      index === 0 ? { ...cell, isMarked: true } : cell
+    );
+
+    const cleared = clearMarkedCells(card);
+
+    expect(cleared.filter((cell) => cell.isMarked)).toHaveLength(1);
+    expect(cleared[bingoConstants.freeIndex]).toMatchObject({ label: "FREE", isMarked: true });
+  });
+
+  it("detects completed rows, columns, and diagonals", () => {
+    const card = createBingoCard(phrases, () => 0.5);
+    const mark = (indexes: number[]) =>
+      card.map((cell, index) => (indexes.includes(index) ? { ...cell, isMarked: true } : cell));
+
+    expect(hasBingo(mark([0, 1, 2, 3, 4]))).toBe(true);
+    expect(hasBingo(mark([0, 5, 10, 15, 20]))).toBe(true);
+    expect(hasBingo(mark([0, 6, 12, 18, 24]))).toBe(true);
+    expect(hasBingo(mark([0, 1, 2, 3]))).toBe(false);
   });
 });

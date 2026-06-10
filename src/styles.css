@@ -1,6 +1,6 @@
 :root {
-  color: #17201c;
-  background: #f4f6f1;
+  color: #111111;
+  background: #fffdf6;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
@@ -25,236 +25,209 @@ input {
 }
 
 button {
-  min-height: 44px;
-  border: 1px solid #b9c3bb;
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
   border-radius: 8px;
-  background: #ffffff;
-  color: #17201c;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 button:disabled {
   cursor: not-allowed;
-  opacity: 0.52;
+  opacity: 0.48;
 }
 
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #3c7f70;
+  outline: 3px solid #6254f3;
   outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
 }
 
 .app {
   width: min(1180px, calc(100vw - 32px));
   min-height: 100vh;
   margin: 0 auto;
-  padding: 32px 0;
 }
 
 .entry-app {
   display: grid;
-  align-content: center;
+  place-items: center;
+  padding: 48px 0;
 }
 
 .workspace {
-  width: min(680px, 100%);
-  min-width: 0;
-  margin: 0 auto;
-}
-
-.card-app {
-  display: grid;
-}
-
-.card-view {
-  display: flex;
-  min-width: 0;
-  min-height: calc(100vh - 64px);
-  flex-direction: column;
-}
-
-.workspace,
-.card-view {
-  min-width: 0;
-}
-
-.intro {
-  margin-bottom: 20px;
-}
-
-.eyebrow {
-  margin: 0 0 8px;
-  color: #4c665c;
-  font-size: 0.77rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
-h1,
-h2 {
-  margin: 0;
-  color: #111816;
-  line-height: 1.08;
-  letter-spacing: 0;
-}
-
-h1 {
-  font-size: clamp(2.25rem, 5vw, 4.2rem);
-}
-
-h2 {
-  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
-}
-
-.intro p:last-child {
-  max-width: 36rem;
-  margin: 16px 0 0;
-  color: #45524d;
-  line-height: 1.55;
+  width: min(834px, 100%);
 }
 
 .controls-panel {
-  padding: 18px;
-  border: 1px solid #d7ddd5;
-  border-radius: 8px;
+  border: 1px solid #dedee6;
+  border-radius: 12px;
+  padding: 36px 40px 28px;
   background: #ffffff;
-  box-shadow: 0 16px 40px rgb(36 46 40 / 8%);
 }
 
-.field-header,
-.field-footer,
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.intro {
+  margin-bottom: 18px;
+}
+
+.intro h1 {
+  margin: 0 0 6px;
+  color: #111111;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.intro p {
+  max-width: 760px;
+  margin: 0;
+  color: #6f717d;
+  font-size: 0.93rem;
+  line-height: 1.42;
 }
 
 .field-header {
-  margin-bottom: 8px;
-  color: #4c665c;
-  font-size: 0.9rem;
-  font-weight: 800;
-}
-
-.field-header label {
-  color: #17201c;
+  display: none;
 }
 
 textarea {
   width: 100%;
-  min-height: 360px;
+  min-height: 520px;
   resize: vertical;
-  border: 1px solid #c7d0c8;
+  border: 1px solid #dedede;
   border-radius: 8px;
-  padding: 14px;
-  background: #fbfcfa;
-  color: #17201c;
-  line-height: 1.45;
+  padding: 12px 10px;
+  background: #ffffff;
+  color: #6f717d;
+  font-size: 0.92rem;
+  line-height: 1.42;
 }
 
-.field-footer {
-  min-height: 22px;
-  margin-top: 8px;
-  color: #62716b;
-  font-size: 0.84rem;
+textarea::placeholder {
+  color: #6f717d;
 }
 
 .validation {
-  min-height: 52px;
-  margin: 10px 0 14px;
+  min-height: 26px;
+  margin: 8px 0 10px;
 }
 
 .validation p {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: #9a3324;
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.86rem;
+  font-weight: 600;
 }
 
-.actions {
+.entry-footer {
+  display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 18px;
+  color: #6f717d;
+  font-size: 0.9rem;
 }
 
-.actions button {
-  flex: 0 0 auto;
-  padding: 0 14px;
+.entry-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
-.actions .primary {
-  border-color: #173f38;
-  background: #173f38;
+.share-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #111111;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.share-option input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #111111;
+}
+
+.primary {
+  min-width: 136px;
+  padding: 0 12px;
+  background: #111111;
   color: #ffffff;
 }
 
-.copy-status {
-  min-height: 22px;
-  margin: 12px 0 0;
-  color: #4c665c;
-  font-size: 0.88rem;
-  font-weight: 700;
+.primary:disabled {
+  background: #8f8f8f;
+  color: #ffffff;
+  opacity: 1;
+}
+
+.copy-status,
+.controls-panel > p:not(.copy-status) {
+  min-height: 18px;
+  margin: 6px 0 0;
+  color: #6f717d;
+  font-size: 0.84rem;
 }
 
 .copy-status.failed {
   color: #9a3324;
 }
 
-.share-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #45524d;
-  cursor: pointer;
-  font-size: 0.92rem;
-  font-weight: 800;
-}
-
-.share-option input {
-  width: 18px;
-  height: 18px;
-  accent-color: #173f38;
-}
-
-.card-menu {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 8px;
-}
-
-.card-menu h1 {
-  font-size: clamp(1.9rem, 4vw, 3.4rem);
-}
-
-.menu-actions {
-  display: flex;
+.button-icon {
+  width: 16px;
+  height: 16px;
   flex: 0 0 auto;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
-.menu-actions button {
-  min-width: 84px;
-  padding: 0 14px;
+.card-app {
+  display: grid;
+  place-items: center;
+  padding: 64px 0;
+}
+
+.card-view {
+  position: relative;
+  display: grid;
+  width: min(834px, 100%);
+  gap: 24px;
+}
+
+.card-copy-status {
+  position: absolute;
+  top: -38px;
+  right: 0;
+  margin: 0;
+  text-align: right;
 }
 
 .bingo-board {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.bingo-board {
+  gap: 10px;
   width: 100%;
-  max-width: min(820px, calc(100vh - 150px));
   aspect-ratio: 1;
-  margin: auto;
 }
 
 .cell {
@@ -264,10 +237,11 @@ textarea {
   justify-content: center;
   min-width: 0;
   min-height: 0;
-  border-color: #c3ccc3;
+  border: 1.5px solid #6254ff;
+  border-radius: 8px;
   padding: 10px;
   background: #ffffff;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 70%);
+  color: #111111;
 }
 
 .cell span {
@@ -276,70 +250,174 @@ textarea {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   color: inherit;
-  font-size: clamp(0.72rem, 1.35vw, 1rem);
-  font-weight: 800;
-  line-height: 1.12;
+  font-size: clamp(0.72rem, 1.3vw, 1rem);
+  font-weight: 500;
+  line-height: 1.18;
   text-align: center;
   overflow-wrap: anywhere;
 }
 
 .cell.marked {
-  border-color: #165d51;
-  background: #dff0ea;
-  color: #123b35;
+  background: #d2cef4;
+  color: #6254ff;
 }
 
-.cell.marked span {
+.cell.marked:not(.free) span {
+  font-weight: 700;
   text-decoration: line-through;
   text-decoration-thickness: 2px;
 }
 
-.cell.free {
-  border-color: #2f5c88;
-  background: #e3edf8;
-  color: #193b5c;
+.cell.free span {
+  color: #111111;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-.card-copy-status {
-  margin: 0 0 12px;
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-group button {
+  min-height: 36px;
+  padding: 0 12px;
+  background: #111111;
+  color: #ffffff;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(255 253 246 / 12%);
+}
+
+.win-dialog {
+  width: min(504px, calc(100vw - 40px));
+  overflow: hidden;
+  border: 1px solid #d9d9de;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 22%);
+}
+
+.win-dialog-body {
+  display: grid;
+  justify-items: center;
+  padding: 14px 28px 28px;
+}
+
+.win-dialog h2 {
+  margin: 0 0 8px;
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+
+.win-dialog p {
+  margin: 0 0 26px;
+  color: #747480;
+  font-size: 0.9rem;
+}
+
+.win-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 40px);
+  gap: 4px;
+  margin-bottom: 24px;
+}
+
+.win-grid span {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #d2cef4;
+}
+
+.win-grid span.marked {
+  background: #6254ec;
+}
+
+.copy-win-button {
+  width: 216px;
+  min-height: 32px;
+  border-color: #dedede;
+  background: #ffffff;
+  color: #111111;
+}
+
+.win-dialog-actions {
+  display: grid;
+  gap: 12px;
+  border-top: 1px solid #dedede;
+  padding: 12px;
+}
+
+.win-dialog-actions button {
+  min-height: 28px;
+  border-radius: 8px;
+  background: #f2f2f2;
+  color: #111111;
+}
+
+.win-dialog-actions .primary {
+  background: #111111;
+  color: #ffffff;
 }
 
 @media (max-width: 900px) {
   .app {
-    width: min(720px, calc(100vw - 24px));
+    width: min(100% - 24px, 680px);
+  }
+
+  .entry-app,
+  .card-app {
     padding: 24px 0;
   }
 
-  .bingo-board {
-    max-width: 100%;
+  .controls-panel {
+    padding: 24px;
+  }
+
+  textarea {
+    min-height: 420px;
   }
 }
 
-@media (max-width: 560px) {
-  h1 {
-    font-size: 2.35rem;
-  }
-
-  .card-menu,
-  .actions {
+@media (max-width: 620px) {
+  .entry-footer,
+  .entry-actions,
+  .card-actions {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .menu-actions {
-    justify-content: stretch;
+  .entry-actions {
+    gap: 14px;
   }
 
-  .menu-actions button {
-    flex: 1 1 0;
+  .primary,
+  .action-group,
+  .action-group button {
+    width: 100%;
   }
 
-  textarea {
-    min-height: 300px;
+  .action-group {
+    align-items: stretch;
   }
 
   .bingo-board {
-    gap: 5px;
+    gap: 6px;
   }
 
   .cell {
@@ -348,6 +426,6 @@ textarea {
 
   .cell span {
     font-size: 0.62rem;
-    line-height: 1.05;
+    line-height: 1.08;
   }
 }

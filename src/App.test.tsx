@@ -250,6 +250,8 @@ describe("App two-step flow", () => {
     expect(copiedText).toContain("🟪🟪🟪🟪🟪");
     expect(copiedText).toContain("#CorporteBingo: ");
     expect(copiedText).toContain("#phrases=");
+    expect(await screen.findByText("Copied.")).toBeInTheDocument();
+    expect(screen.queryByText("Share link copied. Recipients get a fresh randomized card.")).not.toBeInTheDocument();
   });
 
   it("copies a linked hashtag from the win dialog when rich clipboard is available", async () => {

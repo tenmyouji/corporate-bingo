@@ -14,6 +14,7 @@ import { loadSavedState, saveState } from "./storage";
 
 type AppView = "entry" | "card";
 type DialogMode = "win" | "complete" | null;
+type CopyStatus = "idle" | "copied" | "failed";
 type WinResult = {
   plainText: string;
   html: string;
@@ -72,7 +73,8 @@ function App() {
     return savedState?.view === "card" && savedCard ? "card" : "entry";
   });
   const [copyOnGenerate, setCopyOnGenerate] = useState(() => savedState?.copyOnGenerate ?? false);
-  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
+  const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
+  const [winCopyStatus, setWinCopyStatus] = useState<CopyStatus>("idle");
   const [dialogMode, setDialogMode] = useState<DialogMode>(null);
 
   const parsed = useMemo(() => parsePhrases(phraseText), [phraseText]);
@@ -92,6 +94,21 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [copyStatus]);
 
+  useEffect(() => {
+    if (winCopyStatus === "idle") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => setWinCopyStatus("idle"), 2400);
+    return () => window.clearTimeout(timer);
+  }, [winCopyStatus]);
+
+  useEffect(() => {
+    if (!dialogMode) {
+      setWinCopyStatus("idle");
+    }
+  }, [dialogMode]);
+
   async function generateCard() {
     if (!canGenerate) {
       return;
@@ -100,6 +117,7 @@ function App() {
     setCard(createBingoCard(parsed.phrases));
     setView("card");
     setDialogMode(null);
+    setWinCopyStatus("idle");
 
     if (copyOnGenerate) {
       await copyShareLink();
@@ -125,9 +143,9 @@ function App() {
     try {
       await copyWinResultToClipboard(result);
       window.history.replaceState(null, "", encodePhrasesForHash(parsed.phrases));
-      setCopyStatus("copied");
+      setWinCopyStatus("copied");
     } catch {
-      setCopyStatus("failed");
+      setWinCopyStatus("failed");
     }
   }
 
@@ -150,15 +168,18 @@ function App() {
 
     setCard(createBingoCard(parsed.phrases));
     setDialogMode(null);
+    setWinCopyStatus("idle");
   }
 
   function clearCard() {
     setCard((current) => (current ? clearMarkedCells(current) : current));
     setDialogMode(null);
+    setWinCopyStatus("idle");
   }
 
   function editPhrases() {
     setDialogMode(null);
+    setWinCopyStatus("idle");
     setView("entry");
   }
 
@@ -259,6 +280,13 @@ function App() {
                   <button type="button" className="copy-win-button" onClick={copyWinResult}>
                     Copy
                   </button>
+                  <p className={`copy-status win-copy-status ${winCopyStatus}`} aria-live="polite">
+                    {winCopyStatus === "copied"
+                      ? "Copied."
+                      : winCopyStatus === "failed"
+                        ? "Copy failed. Check browser clipboard permissions."
+                        : " "}
+                  </p>
                 </div>
                 <div className="win-dialog-actions">
                   {dialogMode === "win" ? (
@@ -360,9 +388,9 @@ function Icon({ name }: { name: "arrow" | "clear" | "edit" | "share" | "shuffle"
       ) : null}
       {name === "clear" ? (
         <>
-          <path d="m7 21-4-4 9.2-9.2a2.8 2.8 0 0 1 4 0l2 2a2.8 2.8 0 0 1 0 4L11 21" />
-          <path d="M22 21H7" />
-          <path d="m5 19 5-5" />
+          <path d="m3 17 9.6-9.6a2.4 2.4 0 0 1 3.4 0l4.6 4.6a2.4 2.4 0 0 1 0 3.4L15 21H7Z" />
+          <path d="m7 13 6 6" />
+          <path d="M14 21h8" />
         </>
       ) : null}
       {name === "edit" ? (

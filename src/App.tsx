@@ -70,7 +70,7 @@ function App() {
       return "card";
     }
 
-    return savedState?.view === "card" && savedCard ? "card" : "entry";
+    return "entry";
   });
   const [copyOnGenerate, setCopyOnGenerate] = useState(() => savedState?.copyOnGenerate ?? false);
   const [copyStatus, setCopyStatus] = useState<CopyStatus>("idle");
@@ -114,7 +114,7 @@ function App() {
       return;
     }
 
-    setCard(createBingoCard(parsed.phrases));
+    setCard((current) => (current && cardMatchesPhrases(current, parsed.phrases) ? current : createBingoCard(parsed.phrases)));
     setView("card");
     setDialogMode(null);
     setWinCopyStatus("idle");
@@ -427,6 +427,13 @@ function createCardFromText(text: string): BingoCard | null {
 
 function restoreSavedCard(card: BingoCard | null | undefined): BingoCard | null {
   return Array.isArray(card) && card.length === bingoConstants.cardSize ? restoreFreeSpace(card) : null;
+}
+
+function cardMatchesPhrases(card: BingoCard, phrases: string[]): boolean {
+  const phraseKeys = new Set(phrases.map((phrase) => phrase.toLocaleLowerCase()));
+  return card
+    .filter((cell) => !cell.isFree)
+    .every((cell) => phraseKeys.has(cell.label.toLocaleLowerCase()));
 }
 
 async function copyWinResultToClipboard(result: WinResult) {

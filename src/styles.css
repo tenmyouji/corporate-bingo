@@ -129,6 +129,7 @@ textarea {
   width: 100%;
   min-height: 0;
   height: 100%;
+  min-height: min(532px, calc(100dvh - 260px));
   resize: none;
   border: 1px solid #dedede;
   border-radius: 8px;
@@ -242,12 +243,13 @@ textarea::placeholder {
 .card-view {
   position: relative;
   display: grid;
-  width: var(--board-size);
+  width: min(100%, var(--board-size));
+  min-width: 0;
   max-height: 100dvh;
   grid-template-rows: auto auto;
   gap: clamp(10px, 2dvh, 24px);
   justify-items: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .card-copy-status {
@@ -265,7 +267,8 @@ textarea::placeholder {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   grid-template-rows: repeat(5, minmax(0, 1fr));
   gap: 10px;
-  width: 100%;
+  width: min(100%, var(--board-size));
+  min-width: 0;
   max-width: 100%;
   aspect-ratio: 1;
 }
@@ -317,7 +320,8 @@ textarea::placeholder {
 
 .card-actions {
   display: flex;
-  width: 100%;
+  width: min(100%, var(--board-size));
+  min-width: 0;
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
@@ -330,7 +334,6 @@ textarea::placeholder {
 }
 
 .action-group button {
-  min-width: max-content;
   min-height: 36px;
   padding: 0 12px;
   background: #111111;
@@ -466,7 +469,7 @@ textarea::placeholder {
   }
 
   textarea {
-    min-height: 0;
+    min-height: min(532px, calc(100dvh - 250px));
   }
 
   .bingo-board {
@@ -523,7 +526,7 @@ textarea::placeholder {
   }
 
   textarea {
-    min-height: 0;
+    min-height: min(500px, calc(100dvh - 300px));
     font-size: 0.9rem;
     line-height: 1.35;
   }
@@ -686,7 +689,7 @@ textarea::placeholder {
   }
 
   textarea {
-    min-height: 0;
+    min-height: min(480px, calc(100dvh - 280px));
   }
 
   .bingo-board {

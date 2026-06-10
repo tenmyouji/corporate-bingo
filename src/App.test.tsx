@@ -342,7 +342,7 @@ describe("App two-step flow", () => {
     expect(within(dialog).getByRole("button", { name: "Edit phrases" })).toBeInTheDocument();
   });
 
-  it("restores the card step and marked squares after a refresh", async () => {
+  it("starts on phrase entry after refresh while preserving the saved card", async () => {
     const user = userEvent.setup();
     const { unmount } = render(<App />);
 
@@ -356,6 +356,11 @@ describe("App two-step flow", () => {
 
     unmount();
     render(<App />);
+
+    expect(screen.getByRole("textbox", { name: "Phrases" })).toBeInTheDocument();
+    expect(screen.queryByRole("grid", { name: "Bingo card" })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Generate card" }));
 
     expect(await screen.findByRole("grid", { name: "Bingo card" })).toBeInTheDocument();
     expect(screen.getByText(markedLabel).closest("button")).toHaveAttribute("aria-pressed", "true");

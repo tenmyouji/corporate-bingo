@@ -1,5 +1,7 @@
 :root {
-  --board-size: min(834px, 100%);
+  --app-gutter: 32px;
+  --card-vertical-space: 190px;
+  --board-size: min(834px, calc(100vw - var(--app-gutter)), calc(100dvh - var(--card-vertical-space)));
   color: #111111;
   background: #fffdf6;
   font-family:
@@ -88,7 +90,7 @@ textarea:focus-visible {
 .controls-panel {
   display: grid;
   max-height: calc(100dvh - min(96px, 10dvh));
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto auto;
   border: 1px solid #dedee6;
   border-radius: 12px;
   padding: 36px 40px 28px;
@@ -229,8 +231,8 @@ textarea::placeholder {
   position: relative;
   display: grid;
   width: var(--board-size);
-  max-height: calc(100dvh - min(128px, 12dvh));
-  grid-template-rows: minmax(0, 1fr) auto;
+  max-height: 100dvh;
+  grid-template-rows: auto auto;
   gap: clamp(10px, 2dvh, 24px);
   justify-items: center;
   overflow: hidden;
@@ -250,7 +252,7 @@ textarea::placeholder {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
-  width: min(100%, calc(100dvh - min(128px, 12dvh) - 72px));
+  width: 100%;
   max-width: 100%;
   aspect-ratio: 1;
 }
@@ -413,7 +415,8 @@ textarea::placeholder {
 
 @media (max-width: 900px) {
   :root {
-    --board-size: min(100%, calc(100dvh - 112px));
+    --app-gutter: 24px;
+    --card-vertical-space: 128px;
   }
 
   .app {
@@ -431,7 +434,6 @@ textarea::placeholder {
   }
 
   .card-view {
-    max-height: calc(100dvh - 32px);
     gap: 12px;
     justify-items: center;
   }
@@ -441,13 +443,14 @@ textarea::placeholder {
   }
 
   .bingo-board {
-    width: min(var(--board-size), calc(100dvh - 112px));
+    width: 100%;
   }
 }
 
 @media (max-width: 620px) {
   :root {
-    --board-size: min(calc(100vw - 24px), calc(100dvh - 116px));
+    --app-gutter: 24px;
+    --card-vertical-space: 118px;
   }
 
   button {
@@ -510,7 +513,6 @@ textarea::placeholder {
 
   .card-view {
     width: 100%;
-    max-height: calc(100dvh - 20px);
     gap: 8px;
   }
 
@@ -608,7 +610,8 @@ textarea::placeholder {
 
 @media (max-width: 420px) {
   :root {
-    --board-size: min(calc(100vw - 20px), calc(100dvh - 106px));
+    --app-gutter: 20px;
+    --card-vertical-space: 108px;
   }
 
   .app {

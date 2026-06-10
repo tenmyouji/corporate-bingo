@@ -138,14 +138,6 @@ function App() {
             Corporate Bingo card, {markedCount} of 25 marked
           </h1>
 
-          <p className={`copy-status card-copy-status ${copyStatus}`} aria-live="polite">
-            {copyStatus === "copied"
-              ? "Share link copied. Recipients get a fresh randomized card."
-              : copyStatus === "failed"
-                ? "Copy failed. Check browser clipboard permissions."
-                : " "}
-          </p>
-
           <div className="bingo-board" role="grid" aria-label="Bingo card">
             {card.map((cell, index) => (
               <button
@@ -173,14 +165,25 @@ function App() {
               </button>
             </div>
             <div className="action-group">
-              <button type="button" onClick={editPhrases}>
-                <Icon name="edit" />
-                Edit phrases
-              </button>
-              <button type="button" onClick={shareCard} disabled={!canGenerate}>
-                <Icon name="share" />
-                Share
-              </button>
+              <div className="card-action-slot">
+                <button type="button" onClick={editPhrases}>
+                  <Icon name="edit" />
+                  Edit phrases
+                </button>
+              </div>
+              <div className="share-action">
+                <button type="button" onClick={shareCard} disabled={!canGenerate}>
+                  <Icon name="share" />
+                  Share
+                </button>
+                <p className={`copy-status card-copy-status ${copyStatus}`} aria-live="polite">
+                  {copyStatus === "copied"
+                    ? "Share link copied. Recipients get a fresh randomized card."
+                    : copyStatus === "failed"
+                      ? "Copy failed. Check browser clipboard permissions."
+                      : " "}
+                </p>
+              </div>
             </div>
           </nav>
 

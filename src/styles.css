@@ -1,4 +1,5 @@
 :root {
+  --board-size: min(834px, 100%);
   color: #111111;
   background: #fffdf6;
   font-family:
@@ -12,10 +13,19 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   min-width: 320px;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   margin: 0;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 button,
@@ -59,25 +69,31 @@ textarea:focus-visible {
 
 .app {
   width: min(1180px, calc(100vw - 32px));
-  min-height: 100vh;
+  height: 100dvh;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .entry-app {
   display: grid;
   place-items: center;
-  padding: 48px 0;
+  padding: min(48px, 5dvh) 0;
 }
 
 .workspace {
   width: min(834px, 100%);
+  max-height: 100%;
 }
 
 .controls-panel {
+  display: grid;
+  max-height: calc(100dvh - min(96px, 10dvh));
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   border: 1px solid #dedee6;
   border-radius: 12px;
   padding: 36px 40px 28px;
   background: #ffffff;
+  overflow: hidden;
 }
 
 .intro {
@@ -107,8 +123,9 @@ textarea:focus-visible {
 
 textarea {
   width: 100%;
-  min-height: 520px;
-  resize: vertical;
+  min-height: 0;
+  height: 100%;
+  resize: none;
   border: 1px solid #dedede;
   border-radius: 8px;
   padding: 12px 10px;
@@ -116,6 +133,7 @@ textarea {
   color: #6f717d;
   font-size: 0.92rem;
   line-height: 1.42;
+  overflow: auto;
 }
 
 textarea::placeholder {
@@ -123,7 +141,7 @@ textarea::placeholder {
 }
 
 .validation {
-  min-height: 26px;
+  min-height: 20px;
   margin: 8px 0 10px;
 }
 
@@ -204,29 +222,36 @@ textarea::placeholder {
 .card-app {
   display: grid;
   place-items: center;
-  padding: 64px 0;
+  padding: min(64px, 6dvh) 0;
 }
 
 .card-view {
   position: relative;
   display: grid;
-  width: min(834px, 100%);
-  gap: 24px;
+  width: var(--board-size);
+  max-height: calc(100dvh - min(128px, 12dvh));
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: clamp(10px, 2dvh, 24px);
+  justify-items: center;
+  overflow: hidden;
 }
 
 .card-copy-status {
-  position: absolute;
-  top: -38px;
-  right: 0;
-  margin: 0;
-  text-align: right;
+  width: max-content;
+  max-width: 260px;
+  min-height: 16px;
+  margin: 6px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.15;
+  text-align: left;
 }
 
 .bingo-board {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
-  width: 100%;
+  width: min(100%, calc(100dvh - min(128px, 12dvh) - 72px));
+  max-width: 100%;
   aspect-ratio: 1;
 }
 
@@ -276,6 +301,7 @@ textarea::placeholder {
 
 .card-actions {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
@@ -294,6 +320,15 @@ textarea::placeholder {
   color: #ffffff;
 }
 
+.share-action {
+  display: grid;
+  justify-items: start;
+}
+
+.card-action-slot {
+  display: grid;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -305,6 +340,7 @@ textarea::placeholder {
 
 .win-dialog {
   width: min(504px, calc(100vw - 40px));
+  max-height: calc(100dvh - 32px);
   overflow: hidden;
   border: 1px solid #d9d9de;
   border-radius: 12px;
@@ -376,30 +412,87 @@ textarea::placeholder {
 }
 
 @media (max-width: 900px) {
+  :root {
+    --board-size: min(100%, calc(100dvh - 112px));
+  }
+
   .app {
     width: min(100% - 24px, 680px);
   }
 
   .entry-app,
   .card-app {
-    padding: 24px 0;
+    padding: 16px 0;
   }
 
   .controls-panel {
     padding: 24px;
+    max-height: calc(100dvh - 32px);
+  }
+
+  .card-view {
+    max-height: calc(100dvh - 32px);
+    gap: 12px;
+    justify-items: center;
   }
 
   textarea {
-    min-height: 420px;
+    min-height: 0;
+  }
+
+  .bingo-board {
+    width: min(var(--board-size), calc(100dvh - 112px));
   }
 }
 
 @media (max-width: 620px) {
+  :root {
+    --board-size: min(calc(100vw - 24px), calc(100dvh - 116px));
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  .app {
+    width: calc(100vw - 24px);
+  }
+
+  .entry-app,
+  .card-app {
+    align-content: start;
+    padding: 10px 0;
+  }
+
+  .controls-panel {
+    max-height: calc(100dvh - 20px);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .intro {
+    margin-bottom: 14px;
+  }
+
+  .intro p {
+    font-size: 0.88rem;
+    line-height: 1.36;
+  }
+
+  textarea {
+    min-height: 0;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
   .entry-footer,
-  .entry-actions,
-  .card-actions {
+  .entry-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .entry-footer {
+    gap: 12px;
   }
 
   .entry-actions {
@@ -407,25 +500,202 @@ textarea::placeholder {
   }
 
   .primary,
-  .action-group,
-  .action-group button {
+  .entry-actions .primary {
     width: 100%;
   }
 
-  .action-group {
-    align-items: stretch;
+  .share-option {
+    min-height: 32px;
+  }
+
+  .card-view {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    gap: 8px;
+  }
+
+  .card-copy-status {
+    width: 100%;
+    max-width: none;
+    min-height: 14px;
+    margin-top: 4px;
+    font-size: 0.66rem;
+    line-height: 1.05;
+    text-align: center;
   }
 
   .bingo-board {
     gap: 6px;
+    width: var(--board-size);
   }
 
   .cell {
     padding: 5px;
+    border-width: 1.25px;
   }
 
   .cell span {
-    font-size: 0.62rem;
-    line-height: 1.08;
+    -webkit-line-clamp: 3;
+    font-size: clamp(0.58rem, 2.35vw, 0.72rem);
+    line-height: 1.06;
+  }
+
+  .card-actions {
+    display: grid;
+    width: var(--board-size);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .action-group {
+    display: contents;
+  }
+
+  .share-action,
+  .card-action-slot {
+    display: grid;
+    width: 100%;
+  }
+
+  .action-group button,
+  .card-action-slot button,
+  .share-action button {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 8px;
+    font-size: 0.86rem;
+  }
+
+  .button-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  .modal-backdrop {
+    align-items: center;
+    padding: 16px;
+  }
+
+  .win-dialog {
+    width: calc(100vw - 32px);
+  }
+
+  .win-dialog-body {
+    padding: 14px 18px 22px;
+  }
+
+  .win-grid {
+    grid-template-columns: repeat(5, 34px);
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .win-grid span {
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+  }
+
+  .copy-win-button {
+    width: min(216px, 100%);
+    min-height: 36px;
+  }
+
+  .win-dialog-actions button {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  :root {
+    --board-size: min(calc(100vw - 20px), calc(100dvh - 106px));
+  }
+
+  .app {
+    width: calc(100vw - 20px);
+  }
+
+  .entry-app,
+  .card-app {
+    padding: 8px 0;
+  }
+
+  .controls-panel {
+    max-height: calc(100dvh - 16px);
+    padding: 16px;
+  }
+
+  textarea {
+    min-height: 0;
+  }
+
+  .bingo-board {
+    gap: 5px;
+  }
+
+  .cell {
+    border-radius: 7px;
+    padding: 4px;
+  }
+
+  .cell span {
+    font-size: clamp(0.56rem, 2.45vw, 0.66rem);
+    line-height: 1.04;
+  }
+
+  .card-actions {
+    gap: 6px;
+  }
+
+  .action-group button,
+  .card-action-slot button,
+  .share-action button {
+    gap: 5px;
+    padding: 0 6px;
+    font-size: 0.78rem;
+  }
+
+  .button-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .win-grid {
+    grid-template-columns: repeat(5, 30px);
+  }
+
+  .win-grid span {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-height: 620px) {
+  .win-dialog-body {
+    padding: 10px 18px 16px;
+  }
+
+  .win-dialog p {
+    margin-bottom: 14px;
+  }
+
+  .win-grid {
+    grid-template-columns: repeat(5, 28px);
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .win-grid span {
+    width: 28px;
+    height: 28px;
+  }
+
+  .win-dialog-actions {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .win-dialog-actions button {
+    min-height: 34px;
   }
 }

@@ -48,7 +48,19 @@ describe("App two-step flow", () => {
     const textarea = screen.getByRole("textbox", { name: "Phrases" }) as HTMLTextAreaElement;
     expect(textarea.value).toContain("AI-native");
     expect(textarea.value).toContain("Responsible AI");
-    expect(screen.getByText("24 unique phrases")).toBeInTheDocument();
+    expect(screen.getByText("60 unique phrases")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Generate card" })).toBeEnabled();
+  });
+
+  it("applies the LinkedIn phrase preset", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.selectOptions(screen.getByRole("combobox", { name: "Phrase set" }), "LinkedIn");
+
+    const textarea = screen.getByRole("textbox", { name: "Phrases" }) as HTMLTextAreaElement;
+    expect(textarea.value).toContain("I'm thrilled to announce");
+    expect(textarea.value).toContain("Bare minimum Monday");
     expect(screen.getByRole("button", { name: "Generate card" })).toBeEnabled();
   });
 

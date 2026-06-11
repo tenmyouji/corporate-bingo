@@ -94,7 +94,7 @@ textarea:focus-visible {
   display: grid;
   height: min(var(--board-size), calc(100dvh - min(128px, 12dvh)));
   max-height: calc(100dvh - min(128px, 12dvh));
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   border: 1px solid #dedee6;
   border-radius: 12px;
   padding: 36px 40px 28px;
@@ -127,7 +127,7 @@ textarea:focus-visible {
 .entry-toolbar {
   display: flex;
   justify-content: flex-end;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 
 .field-header {
@@ -138,7 +138,6 @@ textarea {
   width: 100%;
   min-height: 0;
   height: 100%;
-  min-height: min(532px, calc(100dvh - 260px));
   resize: none;
   border: 1px solid #dedede;
   border-radius: 8px;
@@ -249,6 +248,10 @@ textarea::placeholder {
   height: 16px;
   margin: 0;
   accent-color: #111111;
+}
+
+.share-option span {
+  white-space: nowrap;
 }
 
 .primary {
@@ -529,7 +532,7 @@ textarea::placeholder {
   }
 
   .controls-panel {
-    height: auto;
+    height: min(var(--board-size), calc(100dvh - 32px));
     padding: 24px;
     max-height: calc(100dvh - 32px);
   }
@@ -537,10 +540,6 @@ textarea::placeholder {
   .card-view {
     gap: 12px;
     justify-items: center;
-  }
-
-  textarea {
-    min-height: min(532px, calc(100dvh - 250px));
   }
 
   .bingo-board {
@@ -602,7 +601,6 @@ textarea::placeholder {
   }
 
   textarea {
-    min-height: min(500px, calc(100dvh - 300px));
     font-size: 0.9rem;
     line-height: 1.35;
   }
@@ -634,6 +632,10 @@ textarea::placeholder {
 
   .share-option {
     min-height: 28px;
+  }
+
+  .share-option span {
+    white-space: normal;
   }
 
   .card-view {
@@ -767,10 +769,6 @@ textarea::placeholder {
   .validation {
     min-height: 16px;
     margin: 5px 0 7px;
-  }
-
-  textarea {
-    min-height: min(480px, calc(100dvh - 280px));
   }
 
   .bingo-board {

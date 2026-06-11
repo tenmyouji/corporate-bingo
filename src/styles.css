@@ -2,6 +2,7 @@
   --app-gutter: 32px;
   --card-vertical-space: 190px;
   --board-size: min(834px, calc(100vw - var(--app-gutter)), calc(100dvh - var(--card-vertical-space)));
+  --entry-panel-width: min(834px, calc(100vw - var(--app-gutter)));
   color: #111111;
   background: #fffdf6;
   font-family:
@@ -86,7 +87,7 @@ textarea:focus-visible {
 }
 
 .workspace {
-  width: min(100%, var(--board-size));
+  width: min(100%, var(--entry-panel-width));
   max-height: 100%;
 }
 
@@ -126,6 +127,8 @@ textarea:focus-visible {
 
 .entry-toolbar {
   display: flex;
+  align-items: center;
+  gap: 16px;
   justify-content: flex-end;
   margin-top: 10px;
 }
@@ -587,6 +590,9 @@ textarea::placeholder {
   }
 
   .entry-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 8px;
     justify-content: stretch;
     margin-top: 10px;
   }
@@ -621,6 +627,11 @@ textarea::placeholder {
 
   .phrase-summary {
     justify-content: space-between;
+  }
+
+  .entry-toolbar .clear-phrases-button {
+    align-self: flex-start;
+    min-height: 28px;
   }
 
   .primary,

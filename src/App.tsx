@@ -554,6 +554,9 @@ function App() {
                   ))}
                 </select>
               </label>
+              <button type="button" className="clear-phrases-button" onClick={clearPhrases}>
+                Clear
+              </button>
             </div>
           </div>
 
@@ -582,9 +585,6 @@ function App() {
               <span>
                 {parsed.phrases.length} unique phrase{parsed.phrases.length === 1 ? "" : "s"}
               </span>
-              <button type="button" className="clear-phrases-button" onClick={clearPhrases}>
-                Clear
-              </button>
             </div>
             <div className="entry-actions">
               <label className="share-option">

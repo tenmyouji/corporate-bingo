@@ -350,6 +350,10 @@ textarea::placeholder {
   gap: 10px;
 }
 
+.right-actions {
+  justify-content: flex-end;
+}
+
 .action-group button {
   min-height: 36px;
   padding: 0 12px;
@@ -360,12 +364,14 @@ textarea::placeholder {
 .share-action {
   position: relative;
   display: flex;
+  width: max-content;
   justify-content: flex-end;
   padding-bottom: 38px;
 }
 
 .card-action-slot {
   display: flex;
+  width: max-content;
   justify-content: flex-start;
 }
 

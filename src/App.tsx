@@ -447,7 +447,7 @@ function App() {
           </div>
 
           <nav className="card-actions" aria-label="Card actions">
-            <div className="action-group">
+            <div className="action-group right-actions">
               <button type="button" onClick={shuffleCard} disabled={!canGenerate}>
                 <Icon name="shuffle" />
                 Shuffle

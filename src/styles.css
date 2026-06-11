@@ -267,9 +267,12 @@ textarea::placeholder {
 }
 
 .card-copy-status {
+  position: absolute;
+  top: 42px;
+  right: 0;
   width: 260px;
   height: 32px;
-  margin: 6px 0 0;
+  margin: 0;
   overflow: hidden;
   font-size: 0.76rem;
   line-height: 1.15;
@@ -355,17 +358,15 @@ textarea::placeholder {
 }
 
 .share-action {
-  display: grid;
-  width: 260px;
-  grid-template-rows: 36px 32px;
-  justify-items: end;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 38px;
 }
 
 .card-action-slot {
-  display: grid;
-  width: 260px;
-  grid-template-rows: 36px 32px;
-  justify-items: start;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .modal-backdrop {
@@ -578,6 +579,7 @@ textarea::placeholder {
   }
 
   .card-copy-status {
+    position: static;
     width: 100%;
     max-width: none;
     height: 28px;

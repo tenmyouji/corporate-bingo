@@ -404,6 +404,10 @@ function App() {
     setPhraseText(phraseSet.phrases.join("\n"));
   }
 
+  function clearPhrases() {
+    setPhraseText("");
+  }
+
   function markCell(index: number) {
     setCard((current) => {
       if (!current) {
@@ -536,6 +540,21 @@ function App() {
               Paste one phrase per line. Generate a 5x5 card, tap squares as they happen, and share the phrase list
               without sharing your current board. A minimum of 24 phrases needed for one card.
             </p>
+            <div className="entry-toolbar">
+              <label className="phrase-set-picker">
+                <span className="sr-only">Phrase set</span>
+                <select defaultValue="" onChange={(event) => applyPhraseSet(event.target.value)}>
+                  <option value="" disabled>
+                    Choose phrase set
+                  </option>
+                  {phraseSets.map((phraseSet) => (
+                    <option key={phraseSet.name} value={phraseSet.name}>
+                      {phraseSet.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
 
           <div className="field-header">
@@ -559,23 +578,15 @@ function App() {
           </div>
 
           <div className="entry-footer" id="phrase-help">
-            <span>
-              {parsed.phrases.length} unique phrase{parsed.phrases.length === 1 ? "" : "s"}
-            </span>
+            <div className="phrase-summary">
+              <span>
+                {parsed.phrases.length} unique phrase{parsed.phrases.length === 1 ? "" : "s"}
+              </span>
+              <button type="button" className="clear-phrases-button" onClick={clearPhrases}>
+                Clear
+              </button>
+            </div>
             <div className="entry-actions">
-              <label className="phrase-set-picker">
-                <span className="sr-only">Phrase set</span>
-                <select defaultValue="" onChange={(event) => applyPhraseSet(event.target.value)}>
-                  <option value="" disabled>
-                    Choose phrase set
-                  </option>
-                  {phraseSets.map((phraseSet) => (
-                    <option key={phraseSet.name} value={phraseSet.name}>
-                      {phraseSet.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
               <label className="share-option">
                 <input
                   type="checkbox"

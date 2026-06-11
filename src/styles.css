@@ -124,6 +124,12 @@ textarea:focus-visible {
   line-height: 1.42;
 }
 
+.entry-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
 .field-header {
   display: none;
 }
@@ -176,16 +182,56 @@ textarea::placeholder {
   gap: 24px;
 }
 
+.phrase-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.clear-phrases-button {
+  min-height: auto;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  color: #111111;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.phrase-set-picker {
+  position: relative;
+  display: inline-grid;
+}
+
+.phrase-set-picker::after {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid #6f717d;
+  border-bottom: 1.5px solid #6f717d;
+  content: "";
+  pointer-events: none;
+  transform: translateY(-70%) rotate(45deg);
+}
+
 .phrase-set-picker select {
-  min-width: 176px;
-  min-height: 38px;
-  border: 1px solid #dedede;
-  border-radius: 8px;
-  padding: 0 34px 0 12px;
+  min-width: 220px;
+  min-height: 40px;
+  appearance: none;
+  border: 1px solid #d9d9de;
+  border-radius: 6px;
+  padding: 0 38px 0 12px;
   background: #ffffff;
   color: #111111;
+  box-shadow: 0 1px 2px rgb(17 17 17 / 5%);
   cursor: pointer;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .share-option {
@@ -541,6 +587,11 @@ textarea::placeholder {
     margin-bottom: 10px;
   }
 
+  .entry-toolbar {
+    justify-content: stretch;
+    margin-top: 10px;
+  }
+
   .intro h1 {
     margin-bottom: 4px;
   }
@@ -568,6 +619,10 @@ textarea::placeholder {
 
   .entry-actions {
     gap: 8px;
+  }
+
+  .phrase-summary {
+    justify-content: space-between;
   }
 
   .primary,

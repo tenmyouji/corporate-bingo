@@ -64,6 +64,18 @@ describe("App two-step flow", () => {
     expect(screen.getByRole("button", { name: "Generate card" })).toBeEnabled();
   });
 
+  it("clears phrases from the entry page", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.selectOptions(screen.getByRole("combobox", { name: "Phrase set" }), "Standard corporate");
+    await user.click(screen.getByRole("button", { name: "Clear" }));
+
+    expect(screen.getByRole("textbox", { name: "Phrases" })).toHaveValue("");
+    expect(screen.getByText("0 unique phrases")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Generate card" })).toBeDisabled();
+  });
+
   it("generates a card and moves to the card step", async () => {
     const user = userEvent.setup();
     render(<App />);

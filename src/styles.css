@@ -3,8 +3,17 @@
   --card-vertical-space: 190px;
   --board-size: min(834px, calc(100vw - var(--app-gutter)), calc(100dvh - var(--card-vertical-space)));
   --entry-panel-width: min(834px, calc(100vw - var(--app-gutter)));
+  --ink: #111111;
+  --muted: #6f717d;
+  --page: #fffdf6;
+  --surface: #ffffff;
+  --tile: #f5f0eb;
+  --line: #dedee6;
+  --mauve: #74354e;
+  --mauve-soft: #bda7b1;
+  --mauve-pale: #d9d0d4;
   color: #111111;
-  background: #fffdf6;
+  background: var(--page);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
@@ -22,6 +31,7 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
+  background: var(--page);
   overflow: hidden;
 }
 
@@ -60,7 +70,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid #6254f3;
+  outline: 3px solid rgb(116 53 78 / 42%);
   outline-offset: 2px;
 }
 
@@ -83,7 +93,7 @@ textarea:focus-visible {
 .entry-app {
   display: grid;
   place-items: center;
-  padding: min(64px, 6dvh) 0;
+  padding: min(116px, 11.4dvh) 0;
 }
 
 .workspace {
@@ -96,10 +106,10 @@ textarea:focus-visible {
   height: min(var(--board-size), calc(100dvh - min(128px, 12dvh)));
   max-height: calc(100dvh - min(128px, 12dvh));
   grid-template-rows: auto minmax(0, 1fr) auto auto auto;
-  border: 1px solid #dedee6;
+  border: 1px solid var(--line);
   border-radius: 12px;
-  padding: 36px 40px 28px;
-  background: #ffffff;
+  padding: 33px 40px 27px;
+  background: var(--surface);
   box-shadow: 0 1px 2px rgb(17 17 17 / 4%);
   overflow: hidden;
 }
@@ -110,7 +120,7 @@ textarea:focus-visible {
 
 .intro h1 {
   margin: 0 0 6px;
-  color: #111111;
+  color: var(--ink);
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0;
@@ -120,7 +130,7 @@ textarea:focus-visible {
 .intro p {
   max-width: 760px;
   margin: 0;
-  color: #6f717d;
+  color: var(--muted);
   font-size: 0.93rem;
   line-height: 1.42;
 }
@@ -128,9 +138,9 @@ textarea:focus-visible {
 .entry-toolbar {
   display: flex;
   align-items: center;
-  gap: 16px;
-  justify-content: flex-end;
-  margin-top: 10px;
+  gap: 15px;
+  justify-content: stretch;
+  margin-top: 17px;
 }
 
 .field-header {
@@ -144,16 +154,16 @@ textarea {
   resize: none;
   border: 1px solid #dedede;
   border-radius: 8px;
-  padding: 14px 12px;
-  background: #ffffff;
-  color: #6f717d;
+  padding: 14px 10px;
+  background: var(--surface);
+  color: var(--muted);
   font-size: 0.92rem;
   line-height: 1.42;
   overflow: auto;
 }
 
 textarea::placeholder {
-  color: #6f717d;
+  color: #27242a;
 }
 
 .validation {
@@ -173,7 +183,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  color: #6f717d;
+  color: var(--muted);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -196,7 +206,7 @@ textarea::placeholder {
   border-radius: 0;
   padding: 0;
   background: transparent;
-  color: #111111;
+  color: var(--ink);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: underline;
@@ -206,6 +216,8 @@ textarea::placeholder {
 .phrase-set-picker {
   position: relative;
   display: inline-grid;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .phrase-set-picker::after {
@@ -214,22 +226,23 @@ textarea::placeholder {
   right: 14px;
   width: 8px;
   height: 8px;
-  border-right: 1.5px solid #6f717d;
-  border-bottom: 1.5px solid #6f717d;
+  border-right: 1.5px solid #27242a;
+  border-bottom: 1.5px solid #27242a;
   content: "";
   pointer-events: none;
   transform: translateY(-70%) rotate(45deg);
 }
 
 .phrase-set-picker select {
-  min-width: 220px;
-  min-height: 40px;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
   appearance: none;
   border: 1px solid #d9d9de;
-  border-radius: 6px;
-  padding: 0 38px 0 12px;
-  background: #ffffff;
-  color: #111111;
+  border-radius: 8px;
+  padding: 0 38px 0 16px;
+  background: var(--surface);
+  color: #27242a;
   box-shadow: 0 1px 2px rgb(17 17 17 / 5%);
   cursor: pointer;
   font-size: 0.9rem;
@@ -240,7 +253,7 @@ textarea::placeholder {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #111111;
+  color: var(--ink);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -260,12 +273,12 @@ textarea::placeholder {
 .primary {
   min-width: 136px;
   padding: 0 12px;
-  background: #111111;
+  background: var(--mauve);
   color: #ffffff;
 }
 
 .primary:disabled {
-  background: #8f8f8f;
+  background: #bca6b0;
   color: #ffffff;
   opacity: 1;
 }
@@ -274,15 +287,15 @@ textarea::placeholder {
   min-width: 132px;
   border-color: #dedede;
   padding: 0 12px;
-  background: #ffffff;
-  color: #111111;
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .copy-status,
 .controls-panel > p:not(.copy-status) {
   min-height: 18px;
   margin: 6px 0 0;
-  color: #6f717d;
+  color: var(--muted);
   font-size: 0.84rem;
 }
 
@@ -304,7 +317,7 @@ textarea::placeholder {
 .card-app {
   display: grid;
   place-items: center;
-  padding: min(64px, 6dvh) 0;
+  padding: min(115px, 11.3dvh) 0 min(112px, 10.9dvh);
 }
 
 .card-view {
@@ -351,20 +364,24 @@ textarea::placeholder {
   justify-content: center;
   min-width: 0;
   min-height: 0;
-  border: 1.5px solid #6254ff;
+  border: 1.5px solid var(--mauve-soft);
   border-radius: 8px;
   padding: 10px;
-  background: #ffffff;
-  color: #111111;
+  background: var(--tile);
+  color: var(--ink);
+  box-shadow:
+    inset 0 0 0 1px rgb(116 53 78 / 7%),
+    0 1px 3px rgb(116 53 78 / 20%);
 }
 
 .cell span {
   display: block;
   overflow: hidden;
   color: inherit;
-  font-size: clamp(0.72rem, 1.3vw, 1rem);
-  font-weight: 500;
-  line-height: 1.18;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.82rem, 1.3vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.2;
   text-align: center;
   white-space: normal;
   word-break: normal;
@@ -372,19 +389,17 @@ textarea::placeholder {
 }
 
 .cell.marked {
-  background: #d2cef4;
-  color: #6254ff;
+  background: var(--mauve);
+  color: #ffffff;
 }
 
 .cell.marked:not(.free) span {
-  font-weight: 700;
-  text-decoration: line-through;
-  text-decoration-thickness: 2px;
+  font-weight: 400;
 }
 
 .cell.free span {
-  color: #111111;
-  font-weight: 800;
+  color: #ffffff;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
@@ -410,7 +425,7 @@ textarea::placeholder {
 .action-group button {
   min-height: 36px;
   padding: 0 12px;
-  background: #111111;
+  background: var(--mauve);
   color: #ffffff;
 }
 
@@ -434,14 +449,14 @@ textarea::placeholder {
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgb(17 17 17 / 10%);
+  background: transparent;
 }
 
 .win-dialog {
   width: min(504px, calc(100vw - 40px));
   max-height: calc(100dvh - 32px);
   overflow: hidden;
-  border: 1px solid #d9d9de;
+  border: 1px solid var(--line);
   border-radius: 12px;
   background: #ffffff;
   box-shadow: 0 18px 44px rgb(17 17 17 / 18%);
@@ -462,7 +477,7 @@ textarea::placeholder {
 
 .win-dialog p {
   margin: 0 0 22px;
-  color: #747480;
+  color: var(--muted);
   font-size: 0.9rem;
 }
 
@@ -477,18 +492,19 @@ textarea::placeholder {
   width: 42px;
   height: 42px;
   border-radius: 8px;
-  background: #d2cef4;
+  background: var(--mauve-pale);
 }
 
 .win-grid span.marked {
-  background: #6254ec;
+  background: var(--mauve);
 }
 
 .copy-win-button {
   width: 216px;
   min-height: 36px;
-  background: #111111;
-  color: #ffffff;
+  border-color: #dedede;
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .win-dialog .win-copy-status {
@@ -509,13 +525,13 @@ textarea::placeholder {
 .win-dialog-actions button {
   min-height: 32px;
   border-radius: 8px;
-  background: #f2f2f2;
-  color: #111111;
+  background: #f3eef1;
+  color: var(--ink);
   white-space: nowrap;
 }
 
 .win-dialog-actions .primary {
-  background: #111111;
+  background: var(--mauve);
   color: #ffffff;
 }
 

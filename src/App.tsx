@@ -291,6 +291,8 @@ function App() {
   const parsed = useMemo(() => parsePhrases(phraseText), [phraseText]);
   const canGenerate = parsed.errors.length === 0;
   const markedCount = card?.filter((cell) => cell.isMarked).length ?? 0;
+  const hasPresetPhrases = phraseSets.some((phraseSet) => phraseSet.phrases.join("\n") === phraseText);
+  const showPhraseToolbar = phraseText.trim().length === 0 || hasPresetPhrases;
 
   useEffect(() => {
     saveState({ phraseText, card, view, copyOnGenerate });
@@ -540,24 +542,26 @@ function App() {
               Paste one phrase per line. Generate a 5x5 card, tap squares as they happen, and share the phrase list
               without sharing your current board. A minimum of 24 phrases needed for one card.
             </p>
-            <div className="entry-toolbar">
-              <label className="phrase-set-picker">
-                <span className="sr-only">Phrase set</span>
-                <select defaultValue="" onChange={(event) => applyPhraseSet(event.target.value)}>
-                  <option value="" disabled>
-                    Choose phrase set
-                  </option>
-                  {phraseSets.map((phraseSet) => (
-                    <option key={phraseSet.name} value={phraseSet.name}>
-                      {phraseSet.name}
+            {showPhraseToolbar ? (
+              <div className="entry-toolbar">
+                <label className="phrase-set-picker">
+                  <span className="sr-only">Phrase set</span>
+                  <select defaultValue="" onChange={(event) => applyPhraseSet(event.target.value)}>
+                    <option value="" disabled>
+                      Select a phrase set
                     </option>
-                  ))}
-                </select>
-              </label>
-              <button type="button" className="clear-phrases-button" onClick={clearPhrases}>
-                Clear
-              </button>
-            </div>
+                    {phraseSets.map((phraseSet) => (
+                      <option key={phraseSet.name} value={phraseSet.name}>
+                        {phraseSet.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button type="button" className="clear-phrases-button" onClick={clearPhrases}>
+                  Clear
+                </button>
+              </div>
+            ) : null}
           </div>
 
           <div className="field-header">

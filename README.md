@@ -1,6 +1,6 @@
 # Corporate Bingo
 
-A browser-only React app for creating one playable 5x5 bingo card from a list of phrases.
+A browser-only React app for creating one playable 5x5 bingo card from a list of phrases for when you are bored at in a work meeting.
 
 ## Screenshots
 
@@ -33,21 +33,9 @@ When a winning line is completed, copy a Wordle-style emoji result with a phrase
 - Copy a Wordle-style result from the win popup.
 - Persist local phrase text, card order, and marked progress in browser storage.
 
-## Run locally
+## Play
 
-```bash
-npm install
-npm run dev
-```
-
-Then open the local URL printed by Vite.
-
-## Checks
-
-```bash
-npm test
-npm run build
-```
+https://corporate-bingo.amandaleiva.ca
 
 ## Sharing
 

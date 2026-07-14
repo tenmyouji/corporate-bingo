@@ -198,35 +198,7 @@ const phraseSets = [
       "Bare minimum Monday"
     ]
   },
-  {
-    name: "Toxic manager",
-    phrases: [
-      "Be a team player",
-      "This is a stretch goal",
-      "We need more urgency",
-      "No excuses",
-      "Own the outcome",
-      "Perception matters",
-      "Let's not get defensive",
-      "I need solutions",
-      "This should be easy",
-      "Everyone is replaceable",
-      "You need thicker skin",
-      "That's above your level",
-      "Work smarter",
-      "Not a good look",
-      "I'll remember this",
-      "Are you committed?",
-      "We're a family",
-      "Take accountability",
-      "Manage up better",
-      "This is basic",
-      "Figure it out",
-      "I don't want surprises",
-      "You missed the mark",
-      "Let's discuss offline"
-    ]
-  },
+
   {
     name: "Town hall",
     phrases: [

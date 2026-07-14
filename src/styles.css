@@ -9,9 +9,10 @@
   --surface: #ffffff;
   --tile: #f5f0eb;
   --line: #dedee6;
-  --mauve: #74354e;
-  --mauve-soft: #bda7b1;
-  --mauve-pale: #d9d0d4;
+  --charcoal: #2f3033;
+  --charcoal-muted: #5b5d61;
+  --charcoal-soft: #c9c9c7;
+  --charcoal-pale: #dededb;
   color: #111111;
   background: var(--page);
   font-family:
@@ -70,7 +71,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid rgb(116 53 78 / 42%);
+  outline: 3px solid rgb(47 48 51 / 38%);
   outline-offset: 2px;
 }
 
@@ -273,12 +274,12 @@ textarea::placeholder {
 .primary {
   min-width: 136px;
   padding: 0 12px;
-  background: var(--mauve);
+  background: var(--charcoal);
   color: #ffffff;
 }
 
 .primary:disabled {
-  background: #bca6b0;
+  background: var(--charcoal-muted);
   color: #ffffff;
   opacity: 1;
 }
@@ -317,7 +318,7 @@ textarea::placeholder {
 .card-app {
   display: grid;
   place-items: center;
-  padding: min(115px, 11.3dvh) 0 min(112px, 10.9dvh);
+  padding: 0;
 }
 
 .card-view {
@@ -364,14 +365,14 @@ textarea::placeholder {
   justify-content: center;
   min-width: 0;
   min-height: 0;
-  border: 1.5px solid var(--mauve-soft);
+  border: 1.5px solid var(--charcoal-soft);
   border-radius: 8px;
   padding: 10px;
   background: var(--tile);
   color: var(--ink);
   box-shadow:
-    inset 0 0 0 1px rgb(116 53 78 / 7%),
-    0 1px 3px rgb(116 53 78 / 20%);
+    inset 0 0 0 1px rgb(47 48 51 / 7%),
+    0 1px 3px rgb(47 48 51 / 16%);
 }
 
 .cell span {
@@ -389,7 +390,7 @@ textarea::placeholder {
 }
 
 .cell.marked {
-  background: var(--mauve);
+  background: var(--charcoal);
   color: #ffffff;
 }
 
@@ -425,7 +426,7 @@ textarea::placeholder {
 .action-group button {
   min-height: 36px;
   padding: 0 12px;
-  background: var(--mauve);
+  background: var(--charcoal);
   color: #ffffff;
 }
 
@@ -492,11 +493,11 @@ textarea::placeholder {
   width: 42px;
   height: 42px;
   border-radius: 8px;
-  background: var(--mauve-pale);
+  background: var(--charcoal-pale);
 }
 
 .win-grid span.marked {
-  background: var(--mauve);
+  background: var(--charcoal);
 }
 
 .copy-win-button {
@@ -531,7 +532,7 @@ textarea::placeholder {
 }
 
 .win-dialog-actions .primary {
-  background: var(--mauve);
+  background: var(--charcoal);
   color: #ffffff;
 }
 
@@ -545,9 +546,12 @@ textarea::placeholder {
     width: min(100% - 24px, 680px);
   }
 
-  .entry-app,
-  .card-app {
+  .entry-app {
     padding: 16px 0;
+  }
+
+  .card-app {
+    padding: 0;
   }
 
   .controls-panel {
@@ -580,10 +584,14 @@ textarea::placeholder {
     width: calc(100vw - 24px);
   }
 
-  .entry-app,
-  .card-app {
+  .entry-app {
     align-content: start;
     padding: 10px 0;
+  }
+
+  .card-app {
+    align-content: center;
+    padding: 0;
   }
 
   .entry-app {
@@ -774,9 +782,12 @@ textarea::placeholder {
     width: calc(100vw - 20px);
   }
 
-  .entry-app,
-  .card-app {
+  .entry-app {
     padding: 8px 0;
+  }
+
+  .card-app {
+    padding: 0;
   }
 
   .controls-panel {

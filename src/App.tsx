@@ -547,7 +547,9 @@ function App() {
             onChange={(event) => setPhraseText(event.target.value)}
             spellCheck="true"
             aria-describedby="phrase-help phrase-errors"
-            placeholder="Phrase 1"
+            placeholder={
+              "One phrase per line — or pick a phrase set above.\n\nCircle back\nTake this offline\nLow-hanging fruit\nMove the needle"
+            }
           />
 
           <div className="validation" id="phrase-errors" aria-live="polite">

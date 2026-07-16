@@ -447,15 +447,15 @@ function App() {
                   <Icon name="share" />
                   Share
                 </button>
-                <p className={`copy-status card-copy-status ${copyStatus}`} aria-live="polite">
-                  {copyStatus === "copied"
-                    ? "Share link copied. Recipients get a fresh randomized card."
-                    : copyStatus === "failed"
-                      ? "Copy failed. Check browser clipboard permissions."
-                      : " "}
-                </p>
               </div>
             </div>
+            <p className={`copy-status card-copy-status ${copyStatus}`} aria-live="polite">
+              {copyStatus === "copied"
+                ? "Share link copied. Recipients get a fresh randomized card."
+                : copyStatus === "failed"
+                  ? "Copy failed. Check browser clipboard permissions."
+                  : " "}
+            </p>
           </nav>
 
           {dialogMode ? (

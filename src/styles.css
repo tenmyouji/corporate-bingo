@@ -94,7 +94,7 @@ textarea:focus-visible {
 .entry-app {
   display: grid;
   place-items: center;
-  padding: min(116px, 11.4dvh) 0;
+  padding: 32px 0;
 }
 
 .workspace {

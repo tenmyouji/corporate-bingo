@@ -2,7 +2,7 @@
   --app-gutter: 32px;
   --card-vertical-space: 160px;
   --board-size: min(980px, calc(100vw - var(--app-gutter)), calc(100dvh - var(--card-vertical-space)));
-  --entry-panel-width: min(834px, calc(100vw - var(--app-gutter)));
+  --entry-panel-width: min(960px, calc(100vw - var(--app-gutter)));
   --ink: #2b2d31;
   --muted: #6f717d;
   --page: #fffdf6;
@@ -94,7 +94,7 @@ textarea:focus-visible {
 .entry-app {
   display: grid;
   place-items: center;
-  padding: 32px 0;
+  padding: 40px 0;
 }
 
 .workspace {
@@ -104,8 +104,8 @@ textarea:focus-visible {
 
 .controls-panel {
   display: grid;
-  height: min(760px, calc(100dvh - min(128px, 12dvh)));
-  max-height: calc(100dvh - min(128px, 12dvh));
+  height: min(1100px, calc(100dvh - 80px));
+  max-height: calc(100dvh - 80px);
   grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   border: 1px solid var(--line);
   border-radius: 12px;

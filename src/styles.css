@@ -157,14 +157,14 @@ textarea {
   border-radius: 8px;
   padding: 14px 10px;
   background: var(--surface);
-  color: var(--muted);
+  color: var(--ink);
   font-size: 0.92rem;
   line-height: 1.42;
   overflow: auto;
 }
 
 textarea::placeholder {
-  color: #27242a;
+  color: var(--muted);
 }
 
 .validation {
@@ -385,8 +385,9 @@ textarea::placeholder {
   line-height: 1.2;
   text-align: center;
   white-space: normal;
-  word-break: normal;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }
 
 .cell.marked {
@@ -590,23 +591,28 @@ textarea::placeholder {
   }
 
   .card-app {
-    align-content: center;
-    padding: 0;
+    align-content: start;
+    padding: 14px 0 0;
   }
 
   .entry-app {
     place-items: stretch center;
+    align-content: start;
   }
 
   .workspace {
-    height: 100%;
+    height: auto;
   }
 
   .controls-panel {
-    height: 100%;
+    height: auto;
     max-height: calc(100dvh - 20px);
     border-radius: 10px;
     padding: 18px;
+  }
+
+  textarea {
+    min-height: clamp(200px, 36dvh, 360px);
   }
 
   .intro {
@@ -680,12 +686,14 @@ textarea::placeholder {
 
   .card-copy-status {
     position: static;
+    grid-column: 1 / -1;
     width: 100%;
     max-width: none;
-    height: 28px;
-    margin-top: 4px;
-    font-size: 0.66rem;
-    line-height: 1.05;
+    height: auto;
+    min-height: 20px;
+    margin-top: 2px;
+    font-size: 0.72rem;
+    line-height: 1.25;
     text-align: center;
   }
 
@@ -707,8 +715,9 @@ textarea::placeholder {
   .card-actions {
     display: grid;
     width: var(--board-size);
-    grid-template-columns: repeat(2, minmax(132px, 1fr));
-    gap: 6px;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .action-group {
@@ -718,18 +727,18 @@ textarea::placeholder {
   .share-action,
   .card-action-slot {
     display: grid;
+    grid-template-columns: 1fr;
     width: 100%;
-    grid-template-rows: 40px 28px;
-    justify-items: stretch;
+    padding-bottom: 0;
   }
 
   .action-group button,
   .card-action-slot button,
   .share-action button {
     width: 100%;
-    min-height: 40px;
+    min-height: 46px;
     padding: 0 10px;
-    font-size: 0.86rem;
+    font-size: 0.9rem;
   }
 
   .button-icon {
@@ -824,16 +833,16 @@ textarea::placeholder {
   }
 
   .card-actions {
-    grid-template-columns: 1fr;
-    gap: 5px;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
 
   .action-group button,
   .card-action-slot button,
   .share-action button {
     gap: 5px;
-    padding: 0 10px;
-    font-size: 0.82rem;
+    padding: 0 8px;
+    font-size: 0.86rem;
   }
 
   .button-icon {

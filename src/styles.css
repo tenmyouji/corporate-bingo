@@ -3,17 +3,17 @@
   --card-vertical-space: 160px;
   --board-size: min(980px, calc(100vw - var(--app-gutter)), calc(100dvh - var(--card-vertical-space)));
   --entry-panel-width: min(834px, calc(100vw - var(--app-gutter)));
-  --ink: #111111;
+  --ink: #2b2d31;
   --muted: #6f717d;
   --page: #fffdf6;
   --surface: #ffffff;
   --tile: #f5f0eb;
   --line: #dedee6;
-  --charcoal: #2f3033;
+  --charcoal: #484b52;
   --charcoal-muted: #5b5d61;
   --charcoal-soft: #c9c9c7;
   --charcoal-pale: #dededb;
-  color: #111111;
+  color: var(--ink);
   background: var(--page);
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -227,8 +227,8 @@ textarea::placeholder {
   right: 14px;
   width: 8px;
   height: 8px;
-  border-right: 1.5px solid #27242a;
-  border-bottom: 1.5px solid #27242a;
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
   content: "";
   pointer-events: none;
   transform: translateY(-70%) rotate(45deg);
@@ -243,7 +243,7 @@ textarea::placeholder {
   border-radius: 8px;
   padding: 0 38px 0 16px;
   background: var(--surface);
-  color: #27242a;
+  color: var(--ink);
   box-shadow: 0 1px 2px rgb(17 17 17 / 5%);
   cursor: pointer;
   font-size: 0.9rem;
@@ -264,7 +264,7 @@ textarea::placeholder {
   width: 16px;
   height: 16px;
   margin: 0;
-  accent-color: #111111;
+  accent-color: var(--charcoal);
 }
 
 .share-option span {

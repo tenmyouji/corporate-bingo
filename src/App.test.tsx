@@ -272,7 +272,7 @@ describe("App two-step flow", () => {
     const copiedText = vi.mocked(navigator.clipboard.writeText).mock.calls[0][0];
     expect(copiedText).toMatch(/^🟪🟪🟪🟪🟪\n/);
     expect(copiedText).toContain("🟪🟪🟪🟪🟪");
-    expect(copiedText).toContain("#CorporteBingo: ");
+    expect(copiedText).toContain("#CorporateBingo: ");
     expect(copiedText).toContain("#phrases=");
     expect(await screen.findByText("Copied.")).toBeInTheDocument();
     expect(screen.queryByText("Share link copied. Recipients get a fresh randomized card.")).not.toBeInTheDocument();
@@ -332,7 +332,7 @@ describe("App two-step flow", () => {
     const clipboardItem = write.mock.calls[0][0][0] as ClipboardItemMock;
     const html = clipboardItem.items["text/html"].parts.join("");
     expect(html).toContain('href="http://localhost:3000/#phrases=');
-    expect(html).toContain(">#CorporteBingo</a>");
+    expect(html).toContain(">#CorporateBingo</a>");
     Object.defineProperty(globalThis, "Blob", {
       configurable: true,
       value: nativeBlob

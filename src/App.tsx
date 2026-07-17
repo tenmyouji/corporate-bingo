@@ -674,7 +674,7 @@ function buildWinResult(card: BingoCard, shareUrl: string): WinResult {
       .map((_, cellIndex) => (winningIndexes.has(rowIndex * 5 + cellIndex) ? "🟪" : "⬜"))
       .join("")
   );
-  const linkText = "#CorporteBingo";
+  const linkText = "#CorporateBingo";
 
   return {
     plainText: [...rows, "", `${linkText}: ${shareUrl}`].join("\n"),
